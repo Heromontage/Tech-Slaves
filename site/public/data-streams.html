@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SentinelFlow | Data Streams Monitoring</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#171b28",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#3cd7ff",
+              "secondary": "#4edea3",
+              "on-tertiary-container": "#724700",
+              "tertiary-fixed": "#ffddb8",
+              "on-secondary": "#003824",
+              "on-error-container": "#ffdad6",
+              "secondary-container": "#00a572",
+              "on-background": "#dfe2f3",
+              "surface-container-lowest": "#0a0e1a",
+              "secondary-fixed-dim": "#4edea3",
+              "on-tertiary-fixed-variant": "#653e00",
+              "primary": "#a8e8ff",
+              "on-secondary-container": "#00311f",
+              "surface": "#0f131f",
+              "outline-variant": "#3c494e",
+              "on-tertiary": "#472a00",
+              "background": "#0f131f",
+              "on-tertiary-fixed": "#2a1700",
+              "on-primary-container": "#00586b",
+              "inverse-primary": "#00677e",
+              "surface-variant": "#313442",
+              "outline": "#859398",
+              "on-surface-variant": "#bbc9cf",
+              "on-surface": "#dfe2f3",
+              "inverse-on-surface": "#2c303d",
+              "secondary-fixed": "#6ffbbe",
+              "primary-fixed": "#b4ebff",
+              "inverse-surface": "#dfe2f3",
+              "on-primary": "#003642",
+              "surface-tint": "#3cd7ff",
+              "surface-dim": "#0f131f",
+              "tertiary-container": "#ffb451",
+              "surface-bright": "#353946",
+              "primary-container": "#00d4ff",
+              "error": "#ffb4ab",
+              "tertiary-fixed-dim": "#ffb95f",
+              "on-secondary-fixed": "#002113",
+              "on-secondary-fixed-variant": "#005236",
+              "on-primary-fixed": "#001f27",
+              "surface-container-high": "#262a37",
+              "on-error": "#690005",
+              "tertiary": "#ffd8ae",
+              "on-primary-fixed-variant": "#004e5f",
+              "surface-container": "#1b1f2c",
+              "surface-container-highest": "#313442"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .glass-card {
+        background: rgba(27, 31, 44, 0.6);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid rgba(53, 57, 70, 0.2);
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary-container/30">
+<!-- SideNavBar Integration -->
+<aside class="fixed left-0 top-0 h-full w-[280px] z-40 bg-slate-900/80 backdrop-blur-md border-r border-white/5 font-['Space_Grotesk'] text-sm font-medium flex flex-col pt-20 pb-8">
+<div class="px-8 mb-10">
+<h1 class="text-xl font-black text-cyan-400">SentinelFlow</h1>
+<p class="text-[10px] text-slate-500 tracking-widest uppercase mt-1">Command Center v2.4</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 text-slate-400 px-6 py-3 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="index.html">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-slate-400 px-6 py-3 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="bottleneck.html">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span>Bottleneck Explorer</span>
+</a>
+<a class="flex items-center gap-3 text-cyan-400 border-l-2 border-cyan-500 bg-cyan-500/5 px-6 py-3" href="data-streams.html">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span>Data Streams</span>
+</a>
+<a class="flex items-center gap-3 text-slate-400 px-6 py-3 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="analytics.html">
+<span class="material-symbols-outlined" data-icon="Model_training">model_training</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 text-slate-400 px-6 py-3 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="api.html">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+<span>API Docs</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full bg-gradient-to-r from-cyan-400 to-cyan-200 text-on-primary font-bold py-3 rounded-full shadow-[0_0_15px_rgba(0,212,255,0.3)] hover:shadow-[0_0_20px_rgba(0,212,255,0.5)] transition-all active:scale-95">
+                Deploy Stream
+            </button>
+<div class="mt-8 flex flex-col gap-2">
+<a class="flex items-center gap-3 text-slate-400 px-2 py-1 text-xs hover:text-slate-200" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span> Support
+                </a>
+<a class="flex items-center gap-3 text-slate-400 px-2 py-1 text-xs hover:text-slate-200" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="description">description</span> Documentation
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-[280px] min-h-screen p-12 max-w-[1600px]">
+<!-- Top Bar -->
+<header class="flex justify-between items-end mb-12">
+<div>
+<h2 class="text-4xl font-headline font-bold tracking-tight text-white mb-2">Data Streams</h2>
+<p class="text-on-surface-variant font-medium">Unified Data Fabric — Real-time Stream Monitoring</p>
+</div>
+<div class="flex items-center gap-6">
+<span class="font-mono text-xs text-outline tracking-wider bg-surface-container px-3 py-1 rounded-full border border-white/5">
+                    Last Updated: 2 min ago
+                </span>
+<button class="flex items-center gap-2 bg-surface-container-high px-6 py-3 rounded-full text-sm font-semibold hover:bg-surface-bright transition-colors border border-white/5 group">
+<span class="material-symbols-outlined text-lg group-hover:rotate-180 transition-transform duration-500" data-icon="refresh">refresh</span>
+                    Refresh All
+                </button>
+</div>
+</header>
+<!-- Stream Health Overview -->
+<section class="grid grid-cols-5 gap-6 mb-12">
+<div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-32 border-l-4 border-primary">
+<span class="text-xs font-headline font-bold text-outline tracking-widest uppercase">Total Streams</span>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-mono font-bold text-primary">08</span>
+<span class="text-xs text-primary/60 font-mono tracking-tighter">UNITS</span>
+</div>
+</div>
+<div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-32 border-l-4 border-secondary">
+<span class="text-xs font-headline font-bold text-outline tracking-widest uppercase">Active</span>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-mono font-bold text-secondary">06</span>
+<span class="text-xs text-secondary/60 font-mono tracking-tighter">UPTIME</span>
+</div>
+</div>
+<div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-32 border-l-4 border-tertiary-container">
+<span class="text-xs font-headline font-bold text-outline tracking-widest uppercase">Degraded</span>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-mono font-bold text-tertiary-container">01</span>
+<span class="text-xs text-tertiary-container/60 font-mono tracking-tighter">WARN</span>
+</div>
+</div>
+<div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-32 border-l-4 border-error">
+<span class="text-xs font-headline font-bold text-outline tracking-widest uppercase">Offline</span>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-mono font-bold text-error">01</span>
+<span class="text-xs text-error/60 font-mono tracking-tighter">CRIT</span>
+</div>
+</div>
+<div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-32 border-l-4 border-white/20">
+<span class="text-xs font-headline font-bold text-outline tracking-widest uppercase">Avg Latency</span>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-mono font-bold text-white">142</span>
+<span class="text-xs text-white/40 font-mono tracking-tighter">MS</span>
+</div>
+</div>
+</section>
+<!-- Data Stream Cards Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
+<!-- Card 1 -->
+<div class="glass-card rounded-2xl p-6 hover:shadow-[0_0_30px_rgba(0,212,255,0.05)] transition-all">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-lg">Commodity Futures</h3>
+<span class="text-xs text-outline font-medium">Financial API</span>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary/10 text-secondary text-[10px] font-bold tracking-widest uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span> Active
+                    </span>
+</div>
+<div class="h-16 w-full mb-6">
+<svg class="w-full h-full stroke-secondary fill-none stroke-2" viewbox="0 0 400 60">
+<path d="M0 45 Q 50 10, 100 35 T 200 20 T 300 40 T 400 15"></path>
+</svg>
+</div>
+<div class="grid grid-cols-3 gap-4 border-t border-white/5 pt-6">
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Throughput</p>
+<p class="font-mono text-white">1.2K <span class="text-[10px] text-outline">r/s</span></p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Latency</p>
+<p class="font-mono text-white">42ms</p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Uptime</p>
+<p class="font-mono text-white">99.9%</p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card rounded-2xl p-6 hover:shadow-[0_0_30px_rgba(0,212,255,0.05)] transition-all">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-lg">Buyer Sentiment</h3>
+<span class="text-xs text-outline font-medium">NLP/Social</span>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary/10 text-secondary text-[10px] font-bold tracking-widest uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span> Active
+                    </span>
+</div>
+<div class="h-16 w-full mb-6">
+<svg class="w-full h-full stroke-secondary fill-none stroke-2" viewbox="0 0 400 60">
+<path d="M0 30 Q 80 50, 160 20 T 320 40 T 400 35"></path>
+</svg>
+</div>
+<div class="grid grid-cols-3 gap-4 border-t border-white/5 pt-6">
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Throughput</p>
+<p class="font-mono text-white">340 <span class="text-[10px] text-outline">r/s</span></p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Latency</p>
+<p class="font-mono text-white">185ms</p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Uptime</p>
+<p class="font-mono text-white">98.4%</p>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card rounded-2xl p-6 border-tertiary-container/30">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container/10 flex items-center justify-center text-tertiary-container">
+<span class="material-symbols-outlined" data-icon="newspaper">newspaper</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-lg">Media Sentiment</h3>
+<span class="text-xs text-outline font-medium">NLP/News</span>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-tertiary-container/10 text-tertiary-container text-[10px] font-bold tracking-widest uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="warning">warning</span> Degraded
+                    </span>
+</div>
+<div class="h-16 w-full mb-6">
+<svg class="w-full h-full stroke-tertiary-container fill-none stroke-2" viewbox="0 0 400 60">
+<path d="M0 40 L 50 45 L 100 30 L 150 55 L 200 10 L 250 50 L 300 30 L 400 45"></path>
+</svg>
+</div>
+<div class="grid grid-cols-3 gap-4 border-t border-white/5 pt-6">
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Throughput</p>
+<p class="font-mono text-white">89 <span class="text-[10px] text-outline">r/s</span></p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Latency</p>
+<p class="font-mono text-tertiary-container font-bold">1.2s</p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Uptime</p>
+<p class="font-mono text-white">94.1%</p>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="glass-card rounded-2xl p-6 hover:shadow-[0_0_30px_rgba(0,212,255,0.05)] transition-all">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-lg">Factory IoT Telemetry</h3>
+<span class="text-xs text-outline font-medium">IoT/MQTT</span>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary/10 text-secondary text-[10px] font-bold tracking-widest uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span> Active
+                    </span>
+</div>
+<div class="h-16 w-full mb-6">
+<svg class="w-full h-full stroke-secondary fill-none stroke-2" viewbox="0 0 400 60">
+<path d="M0 50 L 20 45 L 40 48 L 60 42 L 80 46 L 100 40 L 120 44 L 140 38 L 160 42 L 180 35 L 200 40 L 220 32 L 240 38 L 260 30 L 280 35 L 300 25 L 320 32 L 340 20 L 360 28 L 380 15 L 400 22"></path>
+</svg>
+</div>
+<div class="grid grid-cols-3 gap-4 border-t border-white/5 pt-6">
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Throughput</p>
+<p class="font-mono text-white">5.7K <span class="text-[10px] text-outline">r/s</span></p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Latency</p>
+<p class="font-mono text-white">12ms</p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Uptime</p>
+<p class="font-mono text-white">100%</p>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="glass-card rounded-2xl p-6 hover:shadow-[0_0_30px_rgba(0,212,255,0.05)] transition-all">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="directions_boat">directions_boat</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-lg">AIS Vessel Tracking</h3>
+<span class="text-xs text-outline font-medium">Maritime API</span>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary/10 text-secondary text-[10px] font-bold tracking-widest uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span> Active
+                    </span>
+</div>
+<div class="h-16 w-full mb-6">
+<svg class="w-full h-full stroke-secondary fill-none stroke-2" viewbox="0 0 400 60">
+<path d="M0 20 C 100 20, 100 40, 200 40 C 300 40, 300 10, 400 10"></path>
+</svg>
+</div>
+<div class="grid grid-cols-3 gap-4 border-t border-white/5 pt-6">
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Throughput</p>
+<p class="font-mono text-white">2.1K <span class="text-[10px] text-outline">r/s</span></p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Latency</p>
+<p class="font-mono text-white">56ms</p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Uptime</p>
+<p class="font-mono text-white">99.9%</p>
+</div>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="glass-card rounded-2xl p-6 border-error/20 opacity-80 grayscale-[0.5]">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-variant flex items-center justify-center text-outline">
+<span class="material-symbols-outlined" data-icon="science">science</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-lg">Stress Test Data</h3>
+<span class="text-xs text-outline font-medium">Synthetic/Private</span>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-error/10 text-error text-[10px] font-bold tracking-widest uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Offline
+                    </span>
+</div>
+<div class="h-16 w-full mb-6 flex items-center justify-center">
+<div class="w-full h-[1px] bg-outline-variant/30"></div>
+</div>
+<div class="grid grid-cols-3 gap-4 border-t border-white/5 pt-6">
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Throughput</p>
+<p class="font-mono text-error/60">0 <span class="text-[10px] text-outline">r/s</span></p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Latency</p>
+<p class="font-mono text-error/60">—</p>
+</div>
+<div>
+<p class="text-[10px] text-outline uppercase font-bold tracking-tighter mb-1">Uptime</p>
+<p class="font-mono text-error/60">0.0%</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Processing Pipeline Status -->
+<section class="mb-12">
+<h3 class="text-sm font-headline font-bold text-outline tracking-widest uppercase mb-8">Processing Pipeline Real-time Visualization</h3>
+<div class="glass-card p-10 rounded-2xl">
+<div class="flex items-center justify-between relative">
+<!-- Stage 1 -->
+<div class="flex flex-col items-center gap-4 z-10 relative group">
+<div class="w-16 h-16 rounded-2xl bg-secondary/10 border-2 border-secondary flex items-center justify-center text-secondary shadow-[0_0_20px_rgba(78,222,163,0.2)]">
+<span class="material-symbols-outlined text-3xl" data-icon="input">input</span>
+</div>
+<span class="text-xs font-headline font-bold">Ingestion</span>
+<div class="absolute -top-2 -right-2 bg-secondary text-on-secondary w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold">✓</div>
+</div>
+<!-- Flow 1 -->
+<div class="flex-1 h-[2px] bg-gradient-to-r from-secondary to-secondary flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent w-20 h-full animate-[flow_2s_linear_infinite]" style="animation: slide 2s linear infinite;"></div>
+</div>
+<!-- Stage 2 -->
+<div class="flex flex-col items-center gap-4 z-10 relative">
+<div class="w-16 h-16 rounded-2xl bg-secondary/10 border-2 border-secondary flex items-center justify-center text-secondary shadow-[0_0_20px_rgba(78,222,163,0.2)]">
+<span class="material-symbols-outlined text-3xl" data-icon="smart_toy">smart_toy</span>
+</div>
+<span class="text-xs font-headline font-bold text-center">DistilBERT<br/>Risk Scoring</span>
+<div class="absolute -top-2 -right-2 bg-secondary text-on-secondary w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold">✓</div>
+</div>
+<!-- Flow 2 -->
+<div class="flex-1 h-[2px] bg-gradient-to-r from-secondary via-secondary to-secondary"></div>
+<!-- Stage 3 -->
+<div class="flex flex-col items-center gap-4 z-10 relative">
+<div class="w-16 h-16 rounded-2xl bg-secondary/10 border-2 border-secondary flex items-center justify-center text-secondary shadow-[0_0_20px_rgba(78,222,163,0.2)]">
+<span class="material-symbols-outlined text-3xl" data-icon="account_tree">account_tree</span>
+</div>
+<span class="text-xs font-headline font-bold text-center">Graph DB<br/>(Neo4j)</span>
+<div class="absolute -top-2 -right-2 bg-secondary text-on-secondary w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold">✓</div>
+</div>
+<!-- Flow 3 -->
+<div class="flex-1 h-[2px] bg-gradient-to-r from-secondary to-primary-container"></div>
+<!-- Stage 4 -->
+<div class="flex flex-col items-center gap-4 z-10 relative">
+<div class="w-16 h-16 rounded-2xl bg-primary-container/10 border-2 border-primary-container flex items-center justify-center text-primary-container animate-pulse">
+<span class="material-symbols-outlined text-3xl" data-icon="insights">insights</span>
+</div>
+<span class="text-xs font-headline font-bold text-center">Analytics<br/>Engine</span>
+<div class="absolute -top-2 -right-2 bg-primary-container text-on-primary-container w-5 h-5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px]" data-icon="sync">sync</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Ingestion Log -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-sm font-headline font-bold text-outline tracking-widest uppercase">Live System Logs</h3>
+<span class="text-[10px] font-mono text-secondary">STREAMING LIVE</span>
+</div>
+<div class="bg-slate-950/80 rounded-xl p-6 font-mono text-sm border border-white/5 shadow-inner">
+<div class="space-y-2 text-slate-300">
+<p><span class="text-slate-500">[14:23:07]</span> <span class="text-primary">Commodity Futures:</span> 1,247 records ingested <span class="text-secondary">(OK)</span></p>
+<p><span class="text-slate-500">[14:23:04]</span> <span class="text-primary">Factory IoT Telemetry:</span> Batch processing complete - 5.7k ops/s</p>
+<p><span class="text-slate-500">[14:22:58]</span> <span class="text-tertiary-container">Media Sentiment:</span> Connection latency spike detected (1,240ms)</p>
+<p><span class="text-slate-500">[14:22:55]</span> <span class="text-primary">Buyer Sentiment:</span> NLP Classification Score: 0.985</p>
+<p><span class="text-slate-500">[14:22:49]</span> <span class="text-primary">AIS Vessel Tracking:</span> Regional update: North Sea Grid active</p>
+<p><span class="text-slate-500">[14:22:42]</span> <span class="text-error">Stress Test Data:</span> Stream terminated by user signal (SIGTERM)</p>
+<p><span class="text-slate-500">[14:22:38]</span> <span class="text-primary">Commodity Futures:</span> Heartbeat verified - Financial API v4.2</p>
+<p><span class="text-slate-500">[14:22:31]</span> <span class="text-primary">SentinelFlow Core:</span> Automatic load balancing initiated across 4 nodes</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Background Decoration -->
+<div class="fixed top-0 left-0 w-full h-full -z-50 pointer-events-none overflow-hidden opacity-30">
+<div class="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[10%] -left-[5%] w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[100px]"></div>
+</div>
+</body></html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SentinelFlow | Bottleneck Explorer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(27, 31, 44, 0.6);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 20px -5px rgba(0, 212, 255, 0.3);
+        }
+        .glow-red {
+            box-shadow: 0 0 15px -3px rgba(239, 68, 68, 0.4);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0e1a; }
+        ::-webkit-scrollbar-thumb { background: #313442; border-radius: 10px; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "on-primary-fixed-variant": "#004e5f",
+                "on-surface": "#dfe2f3",
+                "on-tertiary": "#472a00",
+                "surface-container-low": "#171b28",
+                "on-secondary-fixed": "#002113",
+                "secondary-fixed": "#6ffbbe",
+                "inverse-surface": "#dfe2f3",
+                "on-tertiary-fixed": "#2a1700",
+                "inverse-primary": "#00677e",
+                "secondary-container": "#00a572",
+                "surface-dim": "#0f131f",
+                "error-container": "#93000a",
+                "error": "#ffb4ab",
+                "primary-container": "#00d4ff",
+                "surface-container": "#1b1f2c",
+                "inverse-on-surface": "#2c303d",
+                "tertiary-fixed-dim": "#ffb95f",
+                "on-secondary": "#003824",
+                "outline-variant": "#3c494e",
+                "tertiary-container": "#ffb451",
+                "surface-tint": "#3cd7ff",
+                "on-secondary-fixed-variant": "#005236",
+                "on-background": "#dfe2f3",
+                "primary": "#a8e8ff",
+                "surface-bright": "#353946",
+                "outline": "#859398",
+                "tertiary": "#ffd8ae",
+                "surface": "#0f131f",
+                "on-error-container": "#ffdad6",
+                "on-tertiary-container": "#724700",
+                "primary-fixed": "#b4ebff",
+                "secondary": "#4edea3",
+                "background": "#0f131f",
+                "surface-container-highest": "#313442",
+                "on-tertiary-fixed-variant": "#653e00",
+                "on-primary-fixed": "#001f27",
+                "on-primary-container": "#00586b",
+                "surface-variant": "#313442",
+                "surface-container-lowest": "#0a0e1a",
+                "on-surface-variant": "#bbc9cf",
+                "on-primary": "#003642",
+                "surface-container-high": "#262a37",
+                "on-error": "#690005",
+                "on-secondary-container": "#00311f",
+                "tertiary-fixed": "#ffddb8",
+                "secondary-fixed-dim": "#4edea3",
+                "primary-fixed-dim": "#3cd7ff"
+              },
+              fontFamily: {
+                "headline": ["Space Grotesk"],
+                "body": ["Inter"],
+                "label": ["Inter"],
+                "mono": ["JetBrains Mono"]
+              },
+              borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px", "sm": "0.5rem"},
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary-container/30">
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="w-[280px] h-screen sticky left-0 top-0 border-r border-white/5 bg-slate-950/60 backdrop-blur-xl flex flex-col py-8 z-50">
+<div class="px-8 mb-12">
+<h1 class="text-2xl font-headline font-bold text-cyan-400 drop-shadow-[0_0_8px_rgba(0,212,255,0.8)] tracking-tight">SentinelFlow</h1>
+<p class="text-[10px] font-mono text-slate-500 mt-1 uppercase tracking-widest">System Status: Active</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 py-3 px-8 text-slate-400 font-mono hover:bg-slate-800/50 hover:text-cyan-300 transition-colors duration-200 group" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-8 text-cyan-400 border-l-2 border-cyan-500 bg-cyan-500/5 font-headline font-medium transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="troubleshoot" style="font-variation-settings: 'FILL' 1;">troubleshoot</span>
+<span>Bottleneck Explorer</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-8 text-slate-400 font-mono hover:bg-slate-800/50 hover:text-cyan-300 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings_input_antenna">settings_input_antenna</span>
+<span>Data Streams</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-8 text-slate-400 font-mono hover:bg-slate-800/50 hover:text-cyan-300 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-8 text-slate-400 font-mono hover:bg-slate-800/50 hover:text-cyan-300 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span>API Docs</span>
+</a>
+</nav>
+<div class="mt-auto px-4 space-y-1">
+<a class="flex items-center gap-3 py-3 px-4 text-slate-400 font-mono hover:bg-slate-800/50 hover:text-cyan-300 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-slate-400 font-mono hover:bg-slate-800/50 hover:text-cyan-300 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 min-w-0">
+<!-- Top Bar -->
+<header class="w-full sticky top-0 z-40 bg-slate-950/40 backdrop-blur-md border-b border-white/5 flex justify-between items-center px-8 py-4">
+<div class="flex items-center gap-8">
+<h2 class="font-headline text-xl font-bold text-on-surface tracking-tight">Bottleneck Explorer</h2>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<select class="bg-surface-container-high border-none text-xs font-mono rounded-sm px-4 py-2 pr-8 focus:ring-1 focus:ring-cyan-500/50 appearance-none text-slate-300 cursor-pointer">
+<option>Region: Global</option>
+<option>Region: Asia-Pacific</option>
+<option>Region: North America</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1.5 text-slate-500 pointer-events-none text-sm" data-icon="expand_more">expand_more</span>
+</div>
+<div class="relative group">
+<select class="bg-surface-container-high border-none text-xs font-mono rounded-sm px-4 py-2 pr-8 focus:ring-1 focus:ring-cyan-500/50 appearance-none text-slate-300 cursor-pointer">
+<option>Severity: All</option>
+<option>Severity: Critical</option>
+<option>Severity: Warning</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1.5 text-slate-500 pointer-events-none text-sm" data-icon="expand_more">expand_more</span>
+</div>
+<div class="relative group">
+<select class="bg-surface-container-high border-none text-xs font-mono rounded-sm px-4 py-2 pr-8 focus:ring-1 focus:ring-cyan-500/50 appearance-none text-slate-300 cursor-pointer">
+<option>Last 7 Days</option>
+<option>Last 24 Hours</option>
+<option>Last 30 Days</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1.5 text-slate-500 pointer-events-none text-sm" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-transparent text-slate-300 font-headline font-medium px-4 py-2 rounded-full border border-white/10 hover:bg-white/5 transition-all text-sm">
+                        Filter View
+                    </button>
+<button class="bg-gradient-to-r from-primary-container to-primary text-on-primary font-headline font-bold px-6 py-2 rounded-full shadow-[0_0_15px_rgba(0,212,255,0.3)] hover:scale-105 transition-transform text-sm">
+                        Export Report
+                    </button>
+<div class="flex items-center gap-2 border-l border-white/10 ml-2 pl-4">
+<span class="material-symbols-outlined text-slate-400 hover:text-cyan-400 cursor-pointer" data-icon="notifications">notifications</span>
+<div class="w-8 h-8 rounded-full bg-slate-800 overflow-hidden border border-cyan-500/30">
+<img alt="User profile" data-alt="close up headshot portrait of a professional logistics analyst with modern eyewear and focused expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqWnmV9tkih5bbUjYFGGR23VS5ybhJCFr2dPVE8MUVFd8qsV36Kx9o05ZU9s072Fw0bRz-0LJKZJI3Xk1LZ3j3mHWSIPdiI3UjQbgk3rgJlxLngzWhhHfi3E0BEUD37-7gu-NVJZaBRnKLyB09z2cZqEURDyyg6fP2JVYBOAW4aC58X7rfhCX5YhCLlnTVJ3Hzo9qmpx47JfJ94OAaWH0YaHB-MSZTsDKco6x-Fl5SC2xbuDzE7HZbLgRRHCi1ZUOp97C5K6f8aqM"/>
+</div>
+</div>
+</div>
+</header>
+<div class="p-8 space-y-8 max-w-[1600px] mx-auto">
+<!-- Active Bottleneck Summary -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Critical Card -->
+<div class="glass-panel p-6 rounded-sm border-l-4 border-error glow-red relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-10">
+<span class="material-symbols-outlined text-6xl" data-icon="report">report</span>
+</div>
+<div class="flex justify-between items-start mb-4">
+<span class="bg-error-container text-on-error-container text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest">Critical</span>
+<span class="text-error font-mono font-bold text-xl">92%</span>
+</div>
+<h3 class="font-headline text-lg font-bold text-white mb-1">Port Shanghai Congestion</h3>
+<p class="text-slate-400 text-sm mb-4">Extreme vessel backlog affecting key trade routes.</p>
+<div class="flex items-center gap-2 text-error text-xs font-mono">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+                            48hr delay impact
+                        </div>
+</div>
+<!-- Warning Card 1 -->
+<div class="glass-panel p-6 rounded-sm border-l-4 border-tertiary relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-tertiary-container/20 text-tertiary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest border border-tertiary/30">Warning</span>
+<span class="text-tertiary font-mono font-bold text-xl">64%</span>
+</div>
+<h3 class="font-headline text-lg font-bold text-white mb-1">Mediterranean Disruption</h3>
+<p class="text-slate-400 text-sm mb-4">Labor strike activities near Suez Canal entrance.</p>
+<div class="flex items-center gap-2 text-tertiary text-xs font-mono">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+                            24hr delay impact
+                        </div>
+</div>
+<!-- Warning Card 2 -->
+<div class="glass-panel p-6 rounded-sm border-l-4 border-tertiary relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-tertiary-container/20 text-tertiary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest border border-tertiary/30">Warning</span>
+<span class="text-tertiary font-mono font-bold text-xl">41%</span>
+</div>
+<h3 class="font-headline text-lg font-bold text-white mb-1">US West Coast Backlog</h3>
+<p class="text-slate-400 text-sm mb-4">Adverse weather causing berthing slowdowns.</p>
+<div class="flex items-center gap-2 text-tertiary text-xs font-mono">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+                            12hr delay impact
+                        </div>
+</div>
+</div>
+<!-- Main Analysis Panel -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Detailed Analysis Panel (Left/Center Main Card) -->
+<div class="lg:col-span-2 glass-panel p-8 rounded-sm glow-cyan border-t-2 border-cyan-500/40">
+<div class="flex justify-between items-center mb-8">
+<div class="flex items-center gap-4">
+<h2 class="font-headline text-2xl font-bold text-white tracking-tight">Port Shanghai Congestion</h2>
+<div class="flex items-center gap-2">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-error opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-error"></span>
+</span>
+<span class="text-error font-bold text-xs uppercase tracking-widest">Live Critical Alert</span>
+</div>
+</div>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<!-- Root Cause Breakdown -->
+<div>
+<h4 class="font-mono text-[10px] text-slate-500 uppercase tracking-widest mb-6 border-b border-white/5 pb-2">Root Cause Breakdown</h4>
+<div class="flex items-center gap-8">
+<div class="relative w-40 h-40">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<!-- Capacity (45%) -->
+<path class="text-cyan-500" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="45, 100" stroke-width="4"></path>
+<!-- Labor (25%) -->
+<path class="text-error" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="25, 100" stroke-dashoffset="-45" stroke-width="4"></path>
+<!-- Weather (15%) -->
+<path class="text-tertiary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="15, 100" stroke-dashoffset="-70" stroke-width="4"></path>
+<!-- Queue (15%) -->
+<path class="text-slate-600" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="15, 100" stroke-dashoffset="-85" stroke-width="4"></path>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-mono text-2xl font-bold text-white leading-none">92</span>
+<span class="text-[10px] text-slate-500 uppercase">Index</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-2 text-xs font-mono">
+<div class="w-2 h-2 rounded-full bg-cyan-500"></div>
+<span class="text-slate-300">Port Capacity: 45%</span>
+</div>
+<div class="flex items-center gap-2 text-xs font-mono">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="text-slate-300">Labor Issues: 25%</span>
+</div>
+<div class="flex items-center gap-2 text-xs font-mono">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="text-slate-300">Weather: 15%</span>
+</div>
+<div class="flex items-center gap-2 text-xs font-mono">
+<div class="w-2 h-2 rounded-full bg-slate-600"></div>
+<span class="text-slate-300">Vessel Queue: 15%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Sentiment & Anomaly Timeline -->
+<div class="space-y-8">
+<div>
+<h4 class="font-mono text-[10px] text-slate-500 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">Sentiment Analysis</h4>
+<div class="flex justify-between text-[10px] font-mono text-slate-400 mb-2">
+<span>Labor Dissatisfaction</span>
+<span class="text-error font-bold">70% Negative</span>
+</div>
+<div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-error via-tertiary to-secondary" style="width: 70%"></div>
+</div>
+</div>
+<div>
+<h4 class="font-mono text-[10px] text-slate-500 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">Anomaly Score (7D)</h4>
+<div class="relative h-24 w-full bg-slate-900/50 rounded overflow-hidden">
+<svg class="w-full h-full" viewbox="0 0 100 40">
+<line stroke="#ef4444" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="15" y2="15"></line>
+<path d="M0,35 L15,32 L30,34 L45,28 L60,10 L75,8 L100,2" fill="none" stroke="#00d4ff" stroke-width="1.5"></path>
+<path d="M0,35 L15,32 L30,34 L45,28 L60,10 L75,8 L100,2 L100,40 L0,40 Z" fill="url(#grad1)"></path>
+<defs>
+<lineargradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:rgba(0, 212, 255, 0.2);stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:rgba(0, 212, 255, 0);stop-opacity:1"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="absolute right-2 top-2 text-[8px] font-mono text-error uppercase">Threshold: 85%</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recommended Actions (Right Side Card) -->
+<div class="flex flex-col gap-6">
+<div class="glass-panel p-6 rounded-sm border border-cyan-500/20 h-full flex flex-col justify-between">
+<div>
+<h4 class="font-headline text-lg font-bold text-white mb-4">Recommended Actions</h4>
+<div class="p-4 bg-cyan-500/10 border border-cyan-500/20 rounded-sm mb-6">
+<div class="flex gap-3 mb-2">
+<span class="material-symbols-outlined text-cyan-400" data-icon="auto_awesome">auto_awesome</span>
+<p class="text-sm text-cyan-50 text-leading-relaxed">
+                                            Reroute <span class="text-cyan-400 font-bold">15% of cargo</span> from Port Shanghai to Port Busan via Rail — maintains <span class="text-cyan-400 font-bold">98% throughput</span>.
+                                        </p>
+</div>
+<div class="flex items-center gap-4 mt-4">
+<div class="flex-1">
+<div class="text-[10px] text-slate-500 uppercase font-mono mb-1">Impact</div>
+<div class="text-sm font-mono text-cyan-300">Save 42 Hours</div>
+</div>
+<div class="flex-1 border-l border-white/10 pl-4">
+<div class="text-[10px] text-slate-500 uppercase font-mono mb-1">Confidence</div>
+<div class="text-sm font-mono text-cyan-300">94.2%</div>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full bg-cyan-500 text-on-primary-container font-headline font-bold py-3 rounded-full hover:bg-cyan-400 transition-colors shadow-[0_4px_12px_rgba(0,212,255,0.4)] flex items-center justify-center gap-2">
+                                Apply Suggestion
+                                <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="glass-panel p-6 rounded-sm flex items-center gap-4 bg-slate-900/40">
+<div class="w-12 h-12 rounded-sm bg-slate-800 flex items-center justify-center text-cyan-400">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</div>
+<div>
+<div class="text-xs text-slate-500 font-mono">API Connection</div>
+<div class="text-sm font-headline text-white">Active Sentinel Gateway</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Affected Routes Table -->
+<section class="glass-panel rounded-sm overflow-hidden">
+<div class="px-8 py-6 border-b border-white/5 flex justify-between items-center">
+<h3 class="font-headline text-xl font-bold text-white tracking-tight">Affected Routes</h3>
+<div class="flex gap-2">
+<span class="text-[10px] font-mono text-slate-500 px-3 py-1 border border-white/10 rounded-full">Showing 124 total affected</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-mono text-xs">
+<thead class="bg-slate-900/50 text-slate-400 uppercase tracking-widest">
+<tr>
+<th class="px-8 py-4 font-normal">Route ID</th>
+<th class="px-8 py-4 font-normal">Origin</th>
+<th class="px-8 py-4 font-normal">Destination</th>
+<th class="px-8 py-4 font-normal">Normal Transit</th>
+<th class="px-8 py-4 font-normal">Current Delay</th>
+<th class="px-8 py-4 font-normal">Risk Level</th>
+<th class="px-8 py-4 font-normal text-center">Reroute</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-8 py-4 text-cyan-400 font-bold">CN-SH-US-LB</td>
+<td class="px-8 py-4 text-slate-300">Shanghai (PVG)</td>
+<td class="px-8 py-4 text-slate-300">Long Beach (LGB)</td>
+<td class="px-8 py-4 text-slate-400">21d</td>
+<td class="px-8 py-4 text-error font-bold">+5.2d</td>
+<td class="px-8 py-4">
+<span class="bg-error-container/20 text-error px-2 py-0.5 rounded-full border border-error/30 text-[10px] font-bold">CRITICAL</span>
+</td>
+<td class="px-8 py-4 text-center">
+<span class="material-symbols-outlined text-cyan-400 text-sm" data-icon="check_circle">check_circle</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-8 py-4 text-cyan-400 font-bold">CN-SH-EU-HAM</td>
+<td class="px-8 py-4 text-slate-300">Shanghai (PVG)</td>
+<td class="px-8 py-4 text-slate-300">Hamburg (HAM)</td>
+<td class="px-8 py-4 text-slate-400">32d</td>
+<td class="px-8 py-4 text-error font-bold">+4.1d</td>
+<td class="px-8 py-4">
+<span class="bg-error-container/20 text-error px-2 py-0.5 rounded-full border border-error/30 text-[10px] font-bold">CRITICAL</span>
+</td>
+<td class="px-8 py-4 text-center">
+<span class="material-symbols-outlined text-cyan-400 text-sm" data-icon="check_circle">check_circle</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-8 py-4 text-cyan-400 font-bold">CN-SH-SG-SIN</td>
+<td class="px-8 py-4 text-slate-300">Shanghai (PVG)</td>
+<td class="px-8 py-4 text-slate-300">Singapore (SIN)</td>
+<td class="px-8 py-4 text-slate-400">5d</td>
+<td class="px-8 py-4 text-tertiary font-bold">+1.8d</td>
+<td class="px-8 py-4">
+<span class="bg-tertiary-container/20 text-tertiary px-2 py-0.5 rounded-full border border-tertiary/30 text-[10px] font-bold">WARNING</span>
+</td>
+<td class="px-8 py-4 text-center">
+<span class="material-symbols-outlined text-slate-600 text-sm" data-icon="cancel">cancel</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-8 py-4 text-cyan-400 font-bold">CN-SH-AU-SYD</td>
+<td class="px-8 py-4 text-slate-300">Shanghai (PVG)</td>
+<td class="px-8 py-4 text-slate-300">Sydney (SYD)</td>
+<td class="px-8 py-4 text-slate-400">14d</td>
+<td class="px-8 py-4 text-error font-bold">+3.2d</td>
+<td class="px-8 py-4">
+<span class="bg-error-container/20 text-error px-2 py-0.5 rounded-full border border-error/30 text-[10px] font-bold">CRITICAL</span>
+</td>
+<td class="px-8 py-4 text-center">
+<span class="material-symbols-outlined text-cyan-400 text-sm" data-icon="check_circle">check_circle</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-8 py-4 text-cyan-400 font-bold">CN-SH-ZA-DUR</td>
+<td class="px-8 py-4 text-slate-300">Shanghai (PVG)</td>
+<td class="px-8 py-4 text-slate-300">Durban (DUR)</td>
+<td class="px-8 py-4 text-slate-400">24d</td>
+<td class="px-8 py-4 text-tertiary font-bold">+1.5d</td>
+<td class="px-8 py-4">
+<span class="bg-tertiary-container/20 text-tertiary px-2 py-0.5 rounded-full border border-tertiary/30 text-[10px] font-bold">WARNING</span>
+</td>
+<td class="px-8 py-4 text-center">
+<span class="material-symbols-outlined text-cyan-400 text-sm" data-icon="check_circle">check_circle</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-8 py-4 text-cyan-400 font-bold">CN-SH-IN-MAA</td>
+<td class="px-8 py-4 text-slate-300">Shanghai (PVG)</td>
+<td class="px-8 py-4 text-slate-300">Chennai (MAA)</td>
+<td class="px-8 py-4 text-slate-400">12d</td>
+<td class="px-8 py-4 text-tertiary font-bold">+2.1d</td>
+<td class="px-8 py-4">
+<span class="bg-tertiary-container/20 text-tertiary px-2 py-0.5 rounded-full border border-tertiary/30 text-[10px] font-bold">WARNING</span>
+</td>
+<td class="px-8 py-4 text-center">
+<span class="material-symbols-outlined text-slate-600 text-sm" data-icon="cancel">cancel</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,22 @@
+{
+  "name": "projects/5459250966208180226",
+  "projectId": "5459250966208180226",
+  "title": "SentinelFlow",
+  "visibility": "PRIVATE",
+  "createTime": "2026-03-31T16:57:28.387126Z",
+  "updateTime": "2026-03-31T16:57:28.387126Z",
+  "projectType": "PROJECT_DESIGN",
+  "origin": "STITCH",
+  "deviceType": "DESKTOP",
+  "designTheme": {
+    "colorMode": "DARK",
+    "font": "INTER",
+    "roundness": "ROUND_EIGHT",
+    "customColor": "#00d4ff",
+    "saturation": 3
+  },
+  "screens": {},
+  "metadata": {
+    "userRole": "OWNER"
+  }
+}

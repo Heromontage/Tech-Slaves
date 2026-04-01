@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SentinelFlow | Analytics &amp; Optimization</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "surface-container-low": "#171b28",
+                "on-background": "#dfe2f3",
+                "tertiary-fixed-dim": "#ffb95f",
+                "primary-fixed": "#b4ebff",
+                "on-error-container": "#ffdad6",
+                "on-tertiary": "#472a00",
+                "surface-dim": "#0f131f",
+                "inverse-on-surface": "#2c303d",
+                "on-secondary": "#293040",
+                "surface-container-lowest": "#0a0e1a",
+                "surface-container": "#1b1f2c",
+                "on-secondary-fixed": "#141b2b",
+                "tertiary-container": "#ffb451",
+                "outline-variant": "#3c494e",
+                "inverse-surface": "#dfe2f3",
+                "surface-container-high": "#262a37",
+                "surface-container-highest": "#313442",
+                "secondary": "#c0c6db",
+                "on-secondary-container": "#aeb5c9",
+                "surface": "#0f131f",
+                "secondary-container": "#404758",
+                "outline": "#859398",
+                "on-secondary-fixed-variant": "#404758",
+                "primary-fixed-dim": "#3cd7ff",
+                "background": "#0f131f",
+                "error-container": "#93000a",
+                "surface-variant": "#313442",
+                "surface-bright": "#353946",
+                "on-error": "#690005",
+                "on-primary-container": "#00586b",
+                "on-tertiary-fixed-variant": "#653e00",
+                "secondary-fixed": "#dce2f7",
+                "error": "#ffb4ab",
+                "primary-container": "#00d4ff",
+                "inverse-primary": "#00677e",
+                "surface-tint": "#3cd7ff",
+                "tertiary-fixed": "#ffddb8",
+                "on-tertiary-fixed": "#2a1700",
+                "on-primary": "#003642",
+                "on-surface": "#dfe2f3",
+                "on-primary-fixed-variant": "#004e5f",
+                "on-surface-variant": "#bbc9cf",
+                "primary": "#a8e8ff",
+                "on-tertiary-container": "#724700",
+                "on-primary-fixed": "#001f27",
+                "tertiary": "#ffd8ae",
+                "secondary-fixed-dim": "#c0c6db"
+              },
+              fontFamily: {
+                "headline": ["Space Grotesk"],
+                "body": ["Inter"],
+                "label": ["Inter"],
+                "mono": ["JetBrains Mono"]
+              },
+              borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(27, 31, 44, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+        }
+        body {
+            background-color: #0a0e1a;
+            color: #dfe2f3;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar (JSON Derived) -->
+<aside class="w-[260px] h-screen fixed left-0 top-0 border-r border-cyan-500/10 bg-slate-950/50 backdrop-blur-xl flex flex-col h-full py-6 px-4 z-50 shadow-[0_0_30px_rgba(0,212,255,0.05)]">
+<div class="mb-10 px-2">
+<h1 class="text-2xl font-bold bg-gradient-to-br from-cyan-300 to-cyan-600 bg-clip-text text-transparent font-['Space_Grotesk'] tracking-tight">SentinelFlow</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-cyan-400/60 font-medium">Supply Chain Digital Twin</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT transition-all duration-300 text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 group" href="index.html">
+<span class="material-symbols-outlined group-hover:text-cyan-400">dashboard</span>
+<span class="font-['Space_Grotesk'] tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT transition-all duration-300 text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 group" href="bottleneck.html">
+<span class="material-symbols-outlined group-hover:text-cyan-400">explore</span>
+<span class="font-['Space_Grotesk'] tracking-tight">Bottleneck Explorer</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT transition-all duration-300 text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 group" href="data-streams.html">
+<span class="material-symbols-outlined group-hover:text-cyan-400">hub</span>
+<span class="font-['Space_Grotesk'] tracking-tight">Data Streams</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT transition-all duration-300 bg-gradient-to-r from-cyan-500/20 to-transparent text-cyan-400 border-l-2 border-cyan-400 font-bold" href="analytics.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-['Space_Grotesk'] tracking-tight">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT transition-all duration-300 text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 group" href="api.html">
+<span class="material-symbols-outlined group-hover:text-cyan-400">api</span>
+<span class="font-['Space_Grotesk'] tracking-tight">API Docs</span>
+</a>
+</nav>
+<div class="mt-auto px-2 pt-6 border-t border-cyan-500/10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center border border-cyan-500/20 overflow-hidden">
+<img alt="SentinelFlow Brand Logo" class="w-full h-full object-cover" data-alt="professional user profile avatar with a tech-focused minimalist aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApBL05iBuBpQhn6p-FM69OOLRZ7n_jvs3DKrBNvwfy9wCe8zJMtJLY6CmPxK48QEYI3wW6RIbsx8vYdC9l9GRdPQKGhmmtZNDU_cZH__EhwaLns93uGLWQ_DS_ZuaBq4lcbEq7dJkVbCk4GwNs3cxyXTC30juxQBS-qng_uCS2HRZclYPnYzR00Vy6VfStZ7FisPO7qJfISPr61A8RkWPwoYM8fiQWEr7DU0v2_A1WaHiSR8EGHD0KPopLnhTBIaXorxqN2gfSrPo"/>
+</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Architect V1</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">System Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[260px] flex-1 flex flex-col min-w-0">
+<!-- TopNavBar (JSON Derived) -->
+<header class="h-16 fixed top-0 right-0 left-[260px] bg-slate-950/40 backdrop-blur-md flex justify-between items-center px-8 w-full z-40 border-b border-cyan-500/10">
+<div class="flex items-center gap-8">
+<span class="text-lg font-semibold text-slate-100 font-['Space_Grotesk'] tracking-widest uppercase">Analytics &amp; Optimization</span>
+<div class="flex items-center gap-1 p-1 bg-surface-container-lowest rounded-full">
+<button class="px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all text-cyan-400 border-b-2 border-cyan-400 pb-1">Model Performance</button>
+<button class="px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all text-slate-400 hover:text-cyan-300/70">Optimization Engine</button>
+<button class="px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all text-slate-400 hover:text-cyan-300/70">Strategy History</button>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-slate-400 hover:text-cyan-200 transition-colors opacity-80 hover:opacity-100">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-slate-400 hover:text-cyan-200 transition-colors opacity-80 hover:opacity-100">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="text-slate-400 hover:text-cyan-200 transition-colors opacity-80 hover:opacity-100">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="mt-16 p-8 max-w-[1400px] w-full mx-auto space-y-8">
+<!-- Model Performance Section -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1: GNN -->
+<div class="glass-panel p-6 rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4 glow-cyan">
+<div class="flex justify-between items-start">
+<h3 class="font-headline text-lg font-medium text-on-surface">Graph Neural Network (GNN)</h3>
+<span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold rounded-full border border-emerald-500/20 uppercase">Active</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline font-bold text-primary">0.91</span>
+<span class="text-on-surface-variant text-xs font-label">F1 Score</span>
+</div>
+<div class="h-16 w-full mt-2 relative overflow-hidden rounded-lg">
+<div class="absolute inset-0 bg-gradient-to-t from-cyan-500/5 to-transparent"></div>
+<!-- Mockup Training Loss SVG -->
+<svg class="w-full h-full stroke-cyan-400 fill-none stroke-[2]" viewbox="0 0 200 60">
+<path d="M0,10 Q25,15 50,45 T100,20 T150,55 T200,48" stroke-dasharray="0" stroke-linecap="round"></path>
+</svg>
+</div>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase tracking-tighter mt-1">Training Loss trending down (↓12%)</p>
+</div>
+<!-- Card 2: XGBoost -->
+<div class="glass-panel p-6 rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4">
+<h3 class="font-headline text-lg font-medium text-on-surface">XGBoost Forecaster</h3>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-2xl font-headline font-bold text-on-surface">2.3 <span class="text-xs text-on-surface-variant font-normal">days</span></p>
+<p class="text-[10px] text-on-surface-variant font-label uppercase tracking-wider">RMSE</p>
+</div>
+<div>
+<p class="text-2xl font-headline font-bold text-on-surface">94.7%</p>
+<p class="text-[10px] text-on-surface-variant font-label uppercase tracking-wider">Accuracy</p>
+</div>
+</div>
+<div class="mt-auto flex items-center gap-2 text-[10px] text-on-surface-variant bg-surface-container-low p-2 rounded-lg">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Last trained: 2h ago</span>
+</div>
+</div>
+<!-- Card 3: Isolation Forest -->
+<div class="glass-panel p-6 rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4">
+<h3 class="font-headline text-lg font-medium text-on-surface">Isolation Forest</h3>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-3xl font-headline font-bold text-tertiary-container">23</p>
+<p class="text-[10px] text-on-surface-variant font-label uppercase tracking-wider">Anomalies Detected (24h)</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-mono text-on-surface">96.8% <span class="text-[10px] text-on-surface-variant block">Precision</span></p>
+<p class="text-sm font-mono text-on-surface">3.2% <span class="text-[10px] text-on-surface-variant block">FPR</span></p>
+</div>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden mt-2">
+<div class="h-full bg-tertiary-container w-[72%]"></div>
+</div>
+</div>
+</section>
+<!-- Optimization Engine Panel -->
+<section class="glass-panel p-8 rounded-DEFAULT border border-outline-variant/10">
+<div class="flex flex-col lg:flex-row gap-10">
+<div class="lg:w-1/3 space-y-6">
+<div>
+<h2 class="text-2xl font-headline font-bold text-on-surface">OR-Tools Linear Programming Engine</h2>
+<div class="flex items-center gap-2 mt-2 text-emerald-400 bg-emerald-400/5 px-3 py-1 rounded-full w-fit border border-emerald-400/10">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+<span class="text-[11px] font-bold uppercase tracking-wider">Optimization Complete</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-lg border border-outline-variant/10">
+<p class="text-[10px] uppercase text-on-surface-variant tracking-widest mb-3">Objective Function</p>
+<code class="font-mono text-cyan-400 text-sm leading-relaxed block">
+                                Minimize Z = Σ(Cost × Flow) + Σ(Risk_Factor × Delay)
+                            </code>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<div class="bg-surface-container-low p-3 rounded-lg text-center">
+<p class="text-lg font-bold">247</p>
+<p class="text-[9px] uppercase text-on-surface-variant">Routes</p>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg text-center">
+<p class="text-lg font-bold">52</p>
+<p class="text-[9px] uppercase text-on-surface-variant">Nodes</p>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg text-center">
+<p class="text-lg font-bold">8</p>
+<p class="text-[9px] uppercase text-on-surface-variant">Active</p>
+</div>
+</div>
+<p class="text-xs text-on-surface-variant">System converged in 482ms. 3 unique strategies generated based on current bottleneck telemetry.</p>
+</div>
+<!-- Flow Visual Placeholder -->
+<div class="lg:w-2/3 min-h-[300px] bg-slate-900/50 rounded-xl relative overflow-hidden border border-cyan-500/5 group">
+<img alt="Optimization Flow Visualization" class="w-full h-full object-cover opacity-60" data-alt="a futuristic digital twin flow diagram showing connecting nodes and glowing lines representing cargo redistribution with data labels" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMvROrmGxQfaYNOcBcNoX9LRUFW5m0MkdvTMJl60JROa8mgrbYH2mnsgrEltJZSXHxeoDuxdFCcqgexvFmOSI8ISm5ZQOvDl96sa0qZxZSt__2n0_zZT_axT2nDhG3VzcG4oih27MzmMnSE1_q4nMDgQUPkvkjjNh7e6pKqYxh-aL-IA-vOYIsxXorEUYLY8Jlpt7J6mBHqU21w3SptdWDqlkNQ7fhthH3SpYUIQdwCeGc4HhREKTBQ0YXJpnFpEjRS17BN8LC3Gc"/>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="flex flex-col items-center gap-4">
+<div class="flex gap-20">
+<div class="text-center">
+<div class="w-3 h-3 bg-cyan-400 rounded-full glow-cyan animate-pulse mx-auto mb-2"></div>
+<span class="text-[10px] font-mono text-cyan-200 uppercase tracking-widest">Inbound: 12.4k TEU</span>
+</div>
+<div class="text-center">
+<div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse mx-auto mb-2"></div>
+<span class="text-[10px] font-mono text-emerald-200 uppercase tracking-widest">Outbound: 12.4k TEU</span>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between">
+<span class="text-[10px] bg-surface-container-highest/80 backdrop-blur-md px-3 py-1 rounded-full text-cyan-300 border border-cyan-500/20">Shanghai Hub (SH) → Busan (BSN) | Redir: +15%</span>
+<span class="text-[10px] bg-surface-container-highest/80 backdrop-blur-md px-3 py-1 rounded-full text-cyan-300 border border-cyan-500/20">Route Efficiency: 98.2%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Strategy Recommendations -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Strategy 1 -->
+<div class="glass-panel p-6 rounded-DEFAULT border-l-4 border-l-cyan-400 flex flex-col gap-5 hover:bg-surface-bright/20 transition-all">
+<div class="flex justify-between items-start">
+<span class="px-3 py-1 bg-cyan-400/10 text-cyan-400 text-[10px] font-bold rounded-full uppercase tracking-widest">Priority: High</span>
+<p class="text-on-surface-variant font-mono text-[10px]">#SF-001</p>
+</div>
+<h4 class="text-lg font-headline font-semibold text-on-surface">Reroute Shanghai → Busan via Rail</h4>
+<div class="space-y-3">
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Cost Impact</span>
+<span class="text-error font-mono">+$12K</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Delay Reduction</span>
+<span class="text-emerald-400 font-mono">-48hrs</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Throughput</span>
+<span class="text-on-surface font-mono">98%</span>
+</div>
+</div>
+<button class="w-full mt-2 py-3 bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-xs uppercase tracking-[0.2em] rounded-full hover:shadow-[0_0_15px_rgba(168,232,255,0.4)] transition-all">Apply Strategy</button>
+</div>
+<!-- Strategy 2 -->
+<div class="glass-panel p-6 rounded-DEFAULT border-l-4 border-l-tertiary-container flex flex-col gap-5">
+<div class="flex justify-between items-start">
+<span class="px-3 py-1 bg-tertiary-container/10 text-tertiary-container text-[10px] font-bold rounded-full uppercase tracking-widest">Priority: Medium</span>
+<p class="text-on-surface-variant font-mono text-[10px]">#SF-002</p>
+</div>
+<h4 class="text-lg font-headline font-semibold text-on-surface">Split Mediterranean Load</h4>
+<div class="space-y-3">
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Cost Impact</span>
+<span class="text-error font-mono">+$8K</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Delay Reduction</span>
+<span class="text-emerald-400 font-mono">-24hrs</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Throughput</span>
+<span class="text-on-surface font-mono">95%</span>
+</div>
+</div>
+<button class="w-full mt-2 py-3 border border-outline-variant/30 text-on-surface font-bold text-xs uppercase tracking-[0.2em] rounded-full hover:bg-surface-container-high transition-all">Review Impact</button>
+</div>
+<!-- Strategy 3 -->
+<div class="glass-panel p-6 rounded-DEFAULT border-l-4 border-l-on-surface-variant flex flex-col gap-5 opacity-70">
+<div class="flex justify-between items-start">
+<span class="px-3 py-1 bg-surface-container-highest text-on-surface-variant text-[10px] font-bold rounded-full uppercase tracking-widest">Priority: Low</span>
+<p class="text-on-surface-variant font-mono text-[10px]">#SF-003</p>
+</div>
+<h4 class="text-lg font-headline font-semibold text-on-surface">Increase West Coast Capacity</h4>
+<div class="space-y-3">
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Cost Impact</span>
+<span class="text-error font-mono">+$25K</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Delay Reduction</span>
+<span class="text-emerald-400 font-mono">-36hrs</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Throughput</span>
+<span class="text-on-surface font-mono">97%</span>
+</div>
+</div>
+<button class="w-full mt-2 py-3 border border-outline-variant/30 text-on-surface font-bold text-xs uppercase tracking-[0.2em] rounded-full hover:bg-surface-container-high transition-all">Review Impact</button>
+</div>
+</section>
+<!-- Performance Timeline -->
+<section class="glass-panel p-8 rounded-DEFAULT border border-outline-variant/10">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="text-xl font-headline font-semibold text-on-surface">Model Accuracy Timeline</h3>
+<p class="text-xs text-on-surface-variant mt-1">Rolling 30-day performance validation</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+<span class="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant">GNN</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+<span class="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant">XGBoost</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-amber-400"></div>
+<span class="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant">Isolation Forest</span>
+</div>
+</div>
+</div>
+<div class="h-64 w-full relative group">
+<!-- SVG Background Grid -->
+<svg class="absolute inset-0 w-full h-full stroke-surface-container-high opacity-30">
+<line x1="0" x2="100%" y1="20%" y2="20%"></line>
+<line x1="0" x2="100%" y1="40%" y2="40%"></line>
+<line x1="0" x2="100%" y1="60%" y2="60%"></line>
+<line x1="0" x2="100%" y1="80%" y2="80%"></line>
+</svg>
+<!-- Mock Charts -->
+<svg class="absolute inset-0 w-full h-full fill-none overflow-visible" viewbox="0 0 1000 200">
+<!-- GNN (Cyan) -->
+<path d="M0,50 L50,45 L100,55 L150,40 L200,42 L250,30 L300,35 L350,20 L400,25 L450,15 L500,22 L550,10 L600,15 L650,20 L700,12 L750,18 L800,5 L850,10 L900,12 L950,8 L1000,5" stroke="#00d4ff" stroke-linecap="round" stroke-width="2"></path>
+<!-- XGBoost (Emerald) -->
+<path d="M0,80 L100,75 L200,85 L300,70 L400,72 L500,60 L600,65 L700,50 L800,55 L900,45 L1000,52" opacity="0.8" stroke="#10b981" stroke-linecap="round" stroke-width="2"></path>
+<!-- Isolation Forest (Amber) -->
+<path d="M0,120 L100,135 L200,115 L300,130 L400,122 L500,140 L600,125 L700,135 L800,110 L900,125 L1000,118" opacity="0.8" stroke="#f59e0b" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+<!-- Timeline Labels -->
+<div class="absolute bottom-[-24px] w-full flex justify-between text-[9px] font-mono text-on-surface-variant uppercase tracking-widest px-1">
+<span>30 Days Ago</span>
+<span>22 Days Ago</span>
+<span>14 Days Ago</span>
+<span>7 Days Ago</span>
+<span>Present (T-0)</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>
