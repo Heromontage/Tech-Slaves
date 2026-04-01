@@ -1,0 +1,26 @@
+# Web framework
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+
+# Database — relational (PostgreSQL)
+sqlalchemy==2.0.30
+asyncpg==0.29.0          # async driver required by SQLAlchemy's async engine
+psycopg2-binary==2.9.9   # kept for Alembic CLI migrations (sync only)
+alembic==1.13.1
+
+# Graph database
+neo4j==5.20.0
+
+# Data processing
+pandas==2.2.2
+numpy==1.26.4
+
+# Machine learning
+torch==2.3.0
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# Utilities
+python-dotenv==1.0.1
+pydantic==2.7.1
+pydantic-settings==2.2.1
+httpx==0.27.0
