@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>SentinelFlow | Command Center</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
       tailwind.config = {
@@ -149,7 +147,7 @@
 <div class="flex items-center flex-1 max-w-xl">
 <div class="relative w-full group">
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
-<input class="w-full bg-slate-900/50 border-none focus:ring-1 focus:ring-cyan-500/50 rounded-lg pl-10 text-sm text-on-surface placeholder:text-slate-500 transition-all" placeholder="Search network nodes, routes, or assets..." type="text"/>
+<input class="w-full bg-slate-900/50 border-none focus:ring-1 focus:ring-cyan-500/50 rounded-lg pl-10 text-sm text-on-surface placeholder:text-slate-500 transition-all" placeholder="Search network nodes..."/>
 </div>
 </div>
 <div class="flex items-center gap-6">
@@ -166,7 +164,7 @@
 <span class="material-symbols-outlined">settings</span>
 </button>
 <div class="flex items-center gap-3 ml-2">
-<img alt="User profile" class="w-9 h-9 rounded-full ring-2 ring-cyan-500/20" data-alt="professional headshot of a technical director in a dark studio setting with subtle blue lighting accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZzhoHz0AN92yKJMs34UIb_BL0OwPtwv20T-uNFGzrvbe9tLzfMUJAakGpkbA2bvJeF8bJEJWQUXVQQ9-refGmKXJ2aqq1cQnNUuCdpb42UCOQIBiiiS_hX5_yrNBiYEYLRFmOnyXUPBnc4s85t-w2U_qo8FfdssAVr3EL4ClZQ_OxQU5UUmJpHDv5jul7PrIFCZTQvmYQkRUuI2j7fJ1C47saZFVAo6B6ld9-U6H0PAXZxE2PiyW1bn0CeHrd4k-OcKDcbRgDuhc"/>
+<img alt="User profile" class="w-9 h-9 rounded-full ring-2 ring-cyan-500/20" src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff"/>
 </div>
 </div>
 </div>
@@ -181,11 +179,11 @@
 <div class="p-2 rounded-lg bg-cyan-500/10 text-cyan-400">
 <span class="material-symbols-outlined">route</span>
 </div>
-<span class="text-xs font-mono text-secondary">+12% ↑</span>
+<span id="route-trend" class="text-xs font-mono text-secondary">Loading...</span>
 </div>
 <h3 class="text-on-surface-variant text-sm font-medium mb-1">Active Routes</h3>
 <div class="flex items-baseline gap-2">
-<span class="text-3xl font-mono font-bold text-on-surface">247</span>
+<span id="active-routes-val" class="text-3xl font-mono font-bold text-on-surface">--</span>
 <span class="text-xs text-on-surface-variant/60 font-mono">LIVE</span>
 </div>
 </div>
@@ -199,11 +197,11 @@
 </div>
 <h3 class="text-on-surface-variant text-sm font-medium mb-1">Bottlenecks Detected</h3>
 <div class="flex items-baseline gap-2">
-<span class="text-3xl font-mono font-bold text-on-surface">8</span>
+<span id="bottlenecks-val" class="text-3xl font-mono font-bold text-on-surface">--</span>
 <span class="text-xs text-error/60 font-mono">RESOLVE REQUIRED</span>
 </div>
 </div>
-<!-- Throughput -->
+<!-- Nodes -->
 <div class="glass-card luminous-edge p-6 rounded-lg group">
 <div class="flex justify-between items-start mb-4">
 <div class="p-2 rounded-lg bg-secondary/10 text-secondary">
@@ -211,10 +209,10 @@
 </div>
 <span class="text-xs font-mono text-secondary-container">OPTIMAL</span>
 </div>
-<h3 class="text-on-surface-variant text-sm font-medium mb-1">Avg Throughput</h3>
+<h3 class="text-on-surface-variant text-sm font-medium mb-1">Active Nodes</h3>
 <div class="flex items-baseline gap-2">
-<span class="text-3xl font-mono font-bold text-on-surface">94.2</span>
-<span class="text-sm font-mono text-on-surface-variant">%</span>
+<span id="nodes-val" class="text-3xl font-mono font-bold text-on-surface">--</span>
+<span class="text-sm font-mono text-on-surface-variant">/ GRAPH</span>
 </div>
 </div>
 <!-- Risk Score -->
@@ -225,9 +223,9 @@
 </div>
 <span class="text-xs font-mono text-secondary">STABLE</span>
 </div>
-<h3 class="text-on-surface-variant text-sm font-medium mb-1">Risk Score</h3>
+<h3 class="text-on-surface-variant text-sm font-medium mb-1">System Health Score</h3>
 <div class="flex items-baseline gap-2">
-<span class="text-3xl font-mono font-bold text-on-surface">23</span>
+<span id="health-val" class="text-3xl font-mono font-bold text-on-surface">--</span>
 <span class="text-xs text-on-surface-variant/60 font-mono">/100</span>
 </div>
 </div>
@@ -236,14 +234,8 @@
 <section class="glass-card luminous-edge rounded-lg overflow-hidden relative min-h-[500px]">
 <!-- Map Interface -->
 <div class="absolute inset-0 z-0 bg-slate-950 opacity-40">
-<img alt="Digital world map visualization" class="w-full h-full object-cover mix-blend-luminosity opacity-20" data-alt="dark stylized digital world map with glowing cyan grid lines and node connections on a deep navy background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBheelVDJr71s4zaekt3OvlwzyCBi_PSLkFFmZLfaDCvoSZa8S106ZY4darBmjwVrDKwFxojgidJAtR_bcM0giHOscwvzME98r5YNwa3twl1wjPhqVK_AHXV-YJgcLgVlaQ8nk9jif5DKKRp6WQ7g4K16GAJXoL2yYR8Ic7tq79IGTLtz36R2QpBsD7kUJHDZnd5g-UMZjWi0HrR5kQ1z5e2hCMFb3iby3y2B3p72M9kVHEUJ1dqVj0Io5hKnKsgX5xC43PKLLqYP0"/>
+<img alt="Digital world map visualization" class="w-full h-full object-cover mix-blend-luminosity opacity-20" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000"/>
 </div>
-<!-- SVG Overlay for Routes (Mockup) -->
-<svg class="absolute inset-0 w-full h-full z-10 pointer-events-none">
-<path d="M 200,300 Q 400,100 800,250" fill="none" opacity="0.6" stroke="#00d4ff" stroke-dasharray="4,4" stroke-width="1.5"></path>
-<path d="M 800,250 Q 900,400 1100,350" fill="none" opacity="0.4" stroke="#00d4ff" stroke-width="1.5"></path>
-<path d="M 300,450 Q 600,400 800,250" fill="none" opacity="0.8" stroke="#00d4ff" stroke-width="2"></path>
-</svg>
 <!-- Interaction Overlay -->
 <div class="relative z-20 p-8 h-full flex flex-col pointer-events-none">
 <div class="flex justify-between items-start">
@@ -251,62 +243,10 @@
 <h2 class="text-xl font-headline font-bold text-primary tracking-tight">Global Network Pulse</h2>
 <p class="text-on-surface-variant text-sm font-mono uppercase tracking-widest mt-1">Real-time Digital Twin Synchronization</p>
 </div>
-<div class="flex gap-4 pointer-events-auto">
-<div class="glass-card px-4 py-2 rounded-lg flex items-center gap-3">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-<span class="text-[10px] font-mono text-on-surface-variant">FACTORY</span>
 </div>
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 bg-secondary rounded-sm"></span>
-<span class="text-[10px] font-mono text-on-surface-variant">WAREHOUSE</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 bg-tertiary-container rotate-45"></span>
-<span class="text-[10px] font-mono text-on-surface-variant">PORT</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Pulsing Markers (Manual placements) -->
-<div class="absolute top-[30%] left-[60%] pointer-events-auto">
-<div class="relative group cursor-pointer">
-<span class="absolute inset-0 bg-error rounded-full animate-ping opacity-75"></span>
-<span class="relative block w-4 h-4 bg-error rounded-full border-2 border-white/20"></span>
-<div class="absolute bottom-6 left-1/2 -translate-x-1/2 glass-card p-3 rounded-lg w-48 opacity-0 group-hover:opacity-100 transition-opacity border-error/50">
-<p class="text-xs font-bold text-error">CRITICAL BOTTLENECK</p>
-<p class="text-[10px] text-on-surface mt-1">Shanghai Terminal Port: Congestion Level 92%</p>
-</div>
-</div>
-</div>
-<div class="absolute top-[55%] left-[20%] pointer-events-auto">
-<div class="relative group cursor-pointer">
-<span class="absolute inset-0 bg-error rounded-full animate-ping opacity-75"></span>
-<span class="relative block w-4 h-4 bg-error rounded-full border-2 border-white/20"></span>
-</div>
-</div>
-<div class="absolute top-[70%] left-[80%] pointer-events-auto">
-<div class="relative group cursor-pointer">
-<span class="absolute inset-0 bg-error rounded-full animate-ping opacity-75"></span>
-<span class="relative block w-4 h-4 bg-error rounded-full border-2 border-white/20"></span>
-</div>
-</div>
-<!-- Map Controls -->
-<div class="mt-auto pointer-events-auto flex justify-between items-end">
-<div class="glass-card p-4 rounded-lg flex flex-col gap-2">
-<div class="flex items-center justify-between gap-8">
-<span class="text-[10px] font-mono text-on-surface-variant">ZOOM</span>
-<span class="text-[10px] font-mono text-primary">85%</span>
-</div>
-<div class="w-32 h-1 bg-white/5 rounded-full overflow-hidden">
-<div class="h-full bg-primary" style="width: 85%"></div>
-</div>
-</div>
-<div class="flex gap-2">
-<button class="w-10 h-10 glass-card rounded-lg flex items-center justify-center text-on-surface hover:text-primary transition-colors"><span class="material-symbols-outlined">add</span></button>
-<button class="w-10 h-10 glass-card rounded-lg flex items-center justify-center text-on-surface hover:text-primary transition-colors"><span class="material-symbols-outlined">remove</span></button>
-<button class="w-10 h-10 glass-card rounded-lg flex items-center justify-center text-on-surface hover:text-primary transition-colors ml-2"><span class="material-symbols-outlined">my_location</span></button>
-</div>
+
+<!-- Dynamic Map Content will inject markers here -->
+<div id="map-markers-container" class="absolute inset-0 pointer-events-auto">
 </div>
 </div>
 </section>
@@ -321,52 +261,9 @@
                             </h2>
 <button class="text-xs font-mono text-on-surface-variant hover:text-primary">MARK ALL AS READ</button>
 </div>
-<div class="space-y-4 overflow-y-auto pr-2">
-<!-- Alert Item -->
-<div class="p-4 bg-error/5 border-l-2 border-error rounded-r-lg flex justify-between items-start">
-<div>
-<div class="flex items-center gap-2 mb-1">
-<span class="px-2 py-0.5 bg-error text-on-error text-[10px] font-bold rounded uppercase">Critical</span>
-<span class="text-xs font-mono text-on-surface-variant">09:42:12 UTC</span>
-</div>
-<p class="text-sm font-medium">Port Shanghai: Congestion Level 92%</p>
-<p class="text-xs text-on-surface-variant mt-1">ETA delays expected for 42 active shipments.</p>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant text-lg">chevron_right</span>
-</div>
-<div class="p-4 bg-tertiary-container/5 border-l-2 border-tertiary-container rounded-r-lg flex justify-between items-start">
-<div>
-<div class="flex items-center gap-2 mb-1">
-<span class="px-2 py-0.5 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold rounded uppercase">Warning</span>
-<span class="text-xs font-mono text-on-surface-variant">09:15:45 UTC</span>
-</div>
-<p class="text-sm font-medium">Route AP-X: Weather Disruption Zone</p>
-<p class="text-xs text-on-surface-variant mt-1">Typhoon trajectory monitoring active for South China Sea.</p>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant text-lg">chevron_right</span>
-</div>
-<div class="p-4 bg-primary/5 border-l-2 border-primary rounded-r-lg flex justify-between items-start">
-<div>
-<div class="flex items-center gap-2 mb-1">
-<span class="px-2 py-0.5 bg-primary-container text-on-primary-container text-[10px] font-bold rounded uppercase">Info</span>
-<span class="text-xs font-mono text-on-surface-variant">08:58:02 UTC</span>
-</div>
-<p class="text-sm font-medium">Inventory Sync: Warehouse Berlin-04</p>
-<p class="text-xs text-on-surface-variant mt-1">Stock levels normalized after holiday surge.</p>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant text-lg">chevron_right</span>
-</div>
-<div class="p-4 bg-tertiary-container/5 border-l-2 border-tertiary-container rounded-r-lg flex justify-between items-start opacity-70">
-<div>
-<div class="flex items-center gap-2 mb-1">
-<span class="px-2 py-0.5 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold rounded uppercase">Warning</span>
-<span class="text-xs font-mono text-on-surface-variant">07:22:11 UTC</span>
-</div>
-<p class="text-sm font-medium">Low Fuel Margin: Shipment #4882-TK</p>
-<p class="text-xs text-on-surface-variant mt-1">Optimizing route for nearest bunkering station.</p>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant text-lg">chevron_right</span>
-</div>
+<div id="alerts-container" class="space-y-4 overflow-y-auto pr-2">
+<!-- Dynamic alerts will populate here -->
+<div class="text-center text-sm text-slate-500 mt-4">Loading alerts...</div>
 </div>
 </div>
 <!-- Right: Route Health Overview -->
@@ -376,58 +273,10 @@
 <span class="material-symbols-outlined text-cyan-400">hub</span>
                                 Route Health Overview
                             </h2>
-<div class="flex items-center gap-2 text-xs font-mono">
-<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span> 90%+</span>
-<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary-container"></span> 70%+</span>
 </div>
-</div>
-<div class="space-y-6 flex-1 flex flex-col justify-center">
-<!-- Route Health Bar -->
-<div class="space-y-2">
-<div class="flex justify-between items-center font-mono text-xs">
-<span class="text-on-surface font-medium">Asia-Pacific Express (AP-X)</span>
-<span class="text-secondary">98.4%</span>
-</div>
-<div class="h-3 bg-white/5 rounded-full overflow-hidden flex">
-<div class="h-full bg-gradient-to-r from-secondary to-secondary-container" style="width: 98.4%"></div>
-</div>
-</div>
-<div class="space-y-2">
-<div class="flex justify-between items-center font-mono text-xs">
-<span class="text-on-surface font-medium">Trans-Atlantic Corridor</span>
-<span class="text-tertiary-fixed">82.1%</span>
-</div>
-<div class="h-3 bg-white/5 rounded-full overflow-hidden">
-<div class="h-full bg-gradient-to-r from-tertiary-fixed-dim to-tertiary-container" style="width: 82.1%"></div>
-</div>
-</div>
-<div class="space-y-2">
-<div class="flex justify-between items-center font-mono text-xs">
-<span class="text-on-surface font-medium">Nordic Logistics Loop</span>
-<span class="text-secondary">94.8%</span>
-</div>
-<div class="h-3 bg-white/5 rounded-full overflow-hidden">
-<div class="h-full bg-gradient-to-r from-secondary to-secondary-container" style="width: 94.8%"></div>
-</div>
-</div>
-<div class="space-y-2">
-<div class="flex justify-between items-center font-mono text-xs">
-<span class="text-on-surface font-medium">Euro-Zone Distribution</span>
-<span class="text-error">64.2%</span>
-</div>
-<div class="h-3 bg-white/5 rounded-full overflow-hidden">
-<div class="h-full bg-gradient-to-r from-error to-error-container" style="width: 64.2%"></div>
-</div>
-</div>
-<div class="space-y-2">
-<div class="flex justify-between items-center font-mono text-xs">
-<span class="text-on-surface font-medium">South American Transit</span>
-<span class="text-secondary">91.0%</span>
-</div>
-<div class="h-3 bg-white/5 rounded-full overflow-hidden">
-<div class="h-full bg-gradient-to-r from-secondary to-secondary-container" style="width: 91%"></div>
-</div>
-</div>
+<div id="route-health-container" class="space-y-6 flex-1 flex flex-col justify-center">
+<!-- Dynamic route health bars will populate here -->
+<div class="text-center text-sm text-slate-500 mt-4">Loading route health...</div>
 </div>
 </div>
 </div>
@@ -439,12 +288,114 @@
 <span class="text-white/10">|</span>
 <span class="flex items-center gap-1">LATENCY: 14MS</span>
 <span class="text-white/10">|</span>
-<span>KERNEL V.2.44.0-STABLE</span>
+<span id="version-val">KERNEL V.2.44.0-STABLE</span>
 </div>
 <div class="text-[10px] font-mono text-on-surface-variant uppercase tracking-widest">
-                    © 2024 SentinelFlow Orbital Solutions
+                    © 2026 SentinelFlow Orbital Solutions
                 </div>
 </footer>
 </main>
 </div>
+
+<!-- ============================================== -->
+<!-- SENTINELFLOW FRONTEND -> BACKEND INTEGRATION SCRIPT -->
+<!-- ============================================== -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const API_BASE_URL = "http://localhost:8000";
+
+    async function loadDashboardData() {
+        try {
+            // 1. Fetch System Health
+            const healthRes = await fetch(`${API_BASE_URL}/health`);
+            if (healthRes.ok) {
+                const healthData = await healthRes.json();
+                document.getElementById('health-val').innerText = healthData.status === "healthy" ? "100" : "85";
+                document.getElementById('version-val').innerText = `KERNEL V.${healthData.version}`;
+            }
+
+            // 2. Fetch Graph Network State (Routes & Nodes)
+            const networkRes = await fetch(`${API_BASE_URL}/api/network-state`);
+            if (networkRes.ok) {
+                const networkData = await networkRes.json();
+                document.getElementById('active-routes-val').innerText = networkData.edge_count || 0;
+                document.getElementById('nodes-val').innerText = networkData.node_count || 0;
+                document.getElementById('route-trend').innerText = "LIVE DATA";
+
+                // Populate Route Health Bars dynamically
+                const routeContainer = document.getElementById('route-health-container');
+                if (networkData.edges && networkData.edges.length > 0) {
+                    routeContainer.innerHTML = ''; // Clear loading text
+                    // Take top 5 routes to display
+                    networkData.edges.slice(0, 5).forEach(edge => {
+                        const healthPct = Math.max(0, 100 - (edge.latency_ratio * 10));
+                        let colorClass = "bg-secondary";
+                        let gradientClass = "from-secondary to-secondary-container";
+                        let textClass = "text-secondary";
+
+                        if (healthPct < 70) {
+                            colorClass = "bg-error";
+                            gradientClass = "from-error to-error-container";
+                            textClass = "text-error";
+                        } else if (healthPct < 90) {
+                            colorClass = "bg-tertiary-container";
+                            gradientClass = "from-tertiary-fixed-dim to-tertiary-container";
+                            textClass = "text-tertiary-fixed";
+                        }
+
+                        routeContainer.innerHTML += `
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center font-mono text-xs">
+                                <span class="text-on-surface font-medium">${edge.from_id} → ${edge.to_id} (${edge.transit_mode})</span>
+                                <span class="${textClass}">${healthPct.toFixed(1)}%</span>
+                            </div>
+                            <div class="h-3 bg-white/5 rounded-full overflow-hidden flex">
+                                <div class="h-full bg-gradient-to-r ${gradientClass}" style="width: ${healthPct}%"></div>
+                            </div>
+                        </div>`;
+                    });
+                }
+            }
+
+            // 3. Fetch Active Bottlenecks (Alerts & Alerts Widget)
+            const bottleneckRes = await fetch(`${API_BASE_URL}/api/bottlenecks`);
+            if (bottleneckRes.ok) {
+                const bnData = await bottleneckRes.json();
+                document.getElementById('bottlenecks-val').innerText = bnData.total_flagged || 0;
+
+                // Populate alerts feed dynamically
+                const alertContainer = document.getElementById('alerts-container');
+                if (bnData.nodes && bnData.nodes.length > 0) {
+                    alertContainer.innerHTML = '';
+                    bnData.nodes.forEach(node => {
+                        alertContainer.innerHTML += `
+                        <div class="p-4 bg-error/5 border-l-2 border-error rounded-r-lg flex justify-between items-start mb-2">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="px-2 py-0.5 bg-error text-on-error text-[10px] font-bold rounded uppercase">${node.risk_level}</span>
+                                    <span class="text-xs font-mono text-on-surface-variant">LATENCY: ${node.max_latency_h}h</span>
+                                </div>
+                                <p class="text-sm font-medium">Node: ${node.name} (${node.node_type})</p>
+                                <p class="text-xs text-on-surface-variant mt-1">Impacts ${node.outbound_routes} outbound route(s).</p>
+                            </div>
+                            <span class="material-symbols-outlined text-on-surface-variant text-lg">warning</span>
+                        </div>`;
+                    });
+                } else {
+                    alertContainer.innerHTML = '<div class="text-center text-sm text-secondary mt-4">No critical bottlenecks detected.</div>';
+                }
+            }
+
+        } catch (error) {
+            console.error("Error fetching data from API:", error);
+        }
+    }
+
+    // Load data immediately on page load
+    loadDashboardData();
+
+    // Auto-refresh every 15 seconds
+    setInterval(loadDashboardData, 15000);
+});
+</script>
 </body></html>

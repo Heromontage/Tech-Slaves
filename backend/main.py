@@ -44,7 +44,7 @@ from database import (
 from ml_pipeline import bn_registry, seed_bn_registry_from_sample_network
 from optimizer import GraphData, RouteOption, optimize_rerouting
 
-# ── Logging ───────────────────────────────────────────────────────────────────
+# ── Logging ───────────────────────────────────────────────────────────────
 
 logging.basicConfig(
     level=logging.INFO,
@@ -54,7 +54,7 @@ logging.basicConfig(
 logger = logging.getLogger("sentinelflow.main")
 
 
-# ── Lifespan ──────────────────────────────────────────────────────────────────
+# ── Lifespan ──────────────────────────────────────────────────────────────
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -87,7 +87,7 @@ async def lifespan(app: FastAPI):
     logger.info("Shutdown complete.")
 
 
-# ── Application ───────────────────────────────────────────────────────────────
+# ── Application ───────────────────────────────────────────────────────────
 
 app = FastAPI(
     title="SentinelFlow API",
@@ -101,7 +101,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# ── CORS ──────────────────────────────────────────────────────────────────────
+# ── CORS ──────────────────────────────────────────────────────────────────
 # Allow React dev-servers on common local ports.  Extend this list or use
 # allow_origins=["*"] to open access wider (not recommended for production).
 
@@ -122,9 +122,9 @@ app.add_middleware(
 )
 
 
-# ═════════════════════════════════════════════════════════════════════════════
-# Pydantic schemas for the three new endpoints
-# ═════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════
+# Pydantic schemas for the endpoints
+# ══════════════════════════════════════════════════════════════════════════
 
 class NodeSchema(BaseModel):
     """A supply-chain graph node returned to the dashboard."""
@@ -242,9 +242,9 @@ class MitigateResponse(BaseModel):
     message:              str
 
 
-# ═════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════
 # Helper: fetch alternative routes for a disrupted node from Neo4j
-# ═════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════
 
 async def _fetch_alternative_routes(disrupted_node_id: str) -> list[RouteOption]:
     """
@@ -310,9 +310,9 @@ async def _fetch_alternative_routes(disrupted_node_id: str) -> list[RouteOption]
     return options or build_shanghai_reroute_graph().routes
 
 
-# ═════════════════════════════════════════════════════════════════════════════
-# Health endpoints (unchanged)
-# ═════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════
+# Health endpoints 
+# ══════════════════════════════════════════════════════════════════════════
 
 @app.get("/", tags=["Health"], summary="Root ping")
 async def root():
@@ -350,9 +350,9 @@ async def health_check():
     return payload
 
 
-# ═════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════
 # GET /api/network-state
-# ═════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════
 
 @app.get(
     "/api/network-state",
@@ -373,14 +373,8 @@ async def get_network_state(
 
     The React dashboard can use this to render the global network map and
     colour edges by congestion level.
-
-    Query parameters
-    ----------------
-    region : optional string
-        When supplied, only nodes in that region are returned, along with
-        all edges that connect them.
     """
-    # ── Nodes ──────────────────────────────────────────────────────────────────
+    # ── Nodes ──────────────────────────────────────────────────────────────
     node_cypher = """
         MATCH (n)
         WHERE n.id IS NOT NULL
@@ -396,7 +390,7 @@ async def get_network_state(
         ORDER BY node_type, node_id
     """
 
-    # ── Edges ──────────────────────────────────────────────────────────────────
+    # ── Edges ──────────────────────────────────────────────────────────────
     edge_cypher = """
         MATCH (a)-[r:TRANSIT_ROUTE]->(b)
         WHERE a.id IS NOT NULL AND b.id IS NOT NULL
@@ -453,9 +447,9 @@ async def get_network_state(
     )
 
 
-# ═════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════
 # GET /api/bottlenecks
-# ═════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════
 
 @app.get(
     "/api/bottlenecks",
@@ -475,19 +469,8 @@ async def get_bottlenecks(
 ):
     """
     Two-layer detection:
-
-    **Layer 1 — Graph heuristic (Neo4j)**
-    Finds nodes whose outbound ``current_latency`` significantly exceeds
-    their ``base_cost``-derived baseline.  This is cheap and always runs.
-
-    **Layer 2 — Isolation Forest (ml_pipeline)**
-    Cross-references the Neo4j results against the in-memory
-    ``RouteBottleneckRegistry``.  For every registered route, the IF
-    anomaly score and P95 threshold are attached to the edge record.
-
-    The response includes both node-level and edge-level bottleneck data
-    so the React dashboard can highlight both the affected hub and the
-    specific lanes that are congested.
+    1. Graph heuristic (Neo4j)
+    2. Isolation Forest (ml_pipeline)
     """
     # ── Layer 1: Neo4j graph heuristic ─────────────────────────────────────────
     severity_filter = ""
@@ -558,8 +541,6 @@ async def get_bottlenecks(
         max_latency = float(rec.get("max_latency") or 0)
         risk_lvl    = _risk_level(max_latency)
 
-        # Apply severity filter (layer 1 SQL-side filter handles this too,
-        # but the explicit check here guards against off-by-one in the heuristic)
         if severity and risk_lvl != severity.lower():
             continue
 
@@ -570,12 +551,11 @@ async def get_bottlenecks(
             region          = rec.get("region"),
             risk_level      = risk_lvl,
             max_latency_h   = round(max_latency, 2),
-            anomaly_score   = None,   # filled below if IF has data
+            anomaly_score   = None,   
             is_if_flagged   = False,
             outbound_routes = int(rec.get("outbound_routes") or 0),
         ))
 
-    # Enrich with IF scores from the registry for edges we monitor
     flagged_edges: list[BottleneckEdgeSchema] = []
     for rec in edge_records:
         from_id  = rec["from_id"]
@@ -594,7 +574,6 @@ async def get_bottlenecks(
                 p95           = bn_result.p95_threshold
                 severity_str  = bn_result.severity
 
-                # Back-annotate anomaly score onto the parent node
                 for node in flagged_nodes:
                     if node.node_id == from_id:
                         if anomaly_score is not None and (
@@ -627,9 +606,9 @@ async def get_bottlenecks(
     )
 
 
-# ═════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════
 # POST /api/mitigate
-# ═════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════
 
 @app.post(
     "/api/mitigate",
@@ -639,34 +618,12 @@ async def get_bottlenecks(
 )
 async def mitigate(body: MitigateRequest):
     """
-    Accepts a disrupted node ID and cargo volume, then:
-
-    1. Queries Neo4j for alternative TRANSIT_ROUTE lanes that bypass the
-       disrupted node (falls back to the built-in sample network if none
-       are found).
-    2. Runs the OR-Tools GLOP linear programme to minimise:
-
-           Z = Σ (cost_per_teu + risk_weight × risk_factor × Δdelay) × flow
-
-    3. Returns the optimised flow plan, ready for the React dashboard to
-       display as strategy cards (matching the SF-001/002/003 layout in
-       ``analytics.html``).
-
-    **Example request body**
-    ```json
-    {
-      "disrupted_node_id": "PORT-CN-SHA",
-      "total_cargo_teu": 12000,
-      "risk_weight": 1.0,
-      "min_throughput_pct": 0.90
-    }
-    ```
+    Runs the OR-Tools GLOP linear programme to minimise cost and delay based on alternative lanes.
     """
     disrupted_id = body.disrupted_node_id.strip()
     if not disrupted_id:
         raise HTTPException(status_code=422, detail="disrupted_node_id must not be empty.")
 
-    # ── 1. Fetch candidate routes from Neo4j ──────────────────────────────────
     try:
         routes = await _fetch_alternative_routes(disrupted_id)
     except Exception as exc:
@@ -682,7 +639,6 @@ async def mitigate(body: MitigateRequest):
             detail=f"No alternative routes found for node '{disrupted_id}'.",
         )
 
-    # ── 2. Build GraphData and run the LP ────────────────────────────────────
     graph_data = GraphData(
         disrupted_node_id  = disrupted_id,
         routes             = routes,
@@ -718,7 +674,6 @@ async def mitigate(body: MitigateRequest):
             },
         )
 
-    # ── 3. Serialise to response ──────────────────────────────────────────────
     logger.info(
         "/api/mitigate '%s' → %s  flow=%.0f TEU  cost=$%.2f  "
         "delay=%.1fh  throughput=%.1f%%",
@@ -754,48 +709,3 @@ async def mitigate(body: MitigateRequest):
         solver_wall_ms = result.solver_wall_ms,
         message        = result.message,
     )
-
-
-# ═════════════════════════════════════════════════════════════════════════════
-# Legacy stub endpoints (kept for backwards compatibility)
-# ═════════════════════════════════════════════════════════════════════════════
-
-@app.get("/v2/routes", tags=["Routes"], summary="List all monitored routes")
-async def list_routes():
-    return {
-        "routes": [],
-        "total": 0,
-        "message": "Use GET /api/network-state for the full graph.",
-    }
-
-
-@app.get("/v2/routes/{route_id}/health", tags=["Routes"])
-async def get_route_health(route_id: str):
-    return {
-        "route_id": route_id,
-        "message":  "Use GET /api/network-state?region=<r> for live data.",
-    }
-
-
-@app.get("/v2/bottlenecks", tags=["Bottlenecks"])
-async def list_bottlenecks_v2(severity: str = None, limit: int = 50):
-    return {
-        "message": "Use GET /api/bottlenecks for the enriched response.",
-        "redirect": f"/api/bottlenecks?severity={severity}&limit={limit}",
-    }
-
-
-@app.post("/v2/optimize", tags=["Optimization"])
-async def run_optimization_v2():
-    return {
-        "message": "Use POST /api/mitigate with a JSON body.",
-        "example": {"disrupted_node_id": "PORT-CN-SHA", "total_cargo_teu": 12000},
-    }
-
-
-@app.get("/v2/streams/status", tags=["Streams"])
-async def get_stream_status():
-    return {
-        "streams": [],
-        "message": "Wire stream monitor models from PostgreSQL to populate.",
-    }

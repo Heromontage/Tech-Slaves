@@ -1,0 +1,49 @@
+/home/vaibhav/.local/lib/python3.12/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+Traceback (most recent call last):
+  File "/home/vaibhav/.local/bin/alembic", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/vaibhav/.local/lib/python3.12/site-packages/alembic/config.py", line 641, in main
+    CommandLine(prog=prog).main(argv=argv)
+  File "/home/vaibhav/.local/lib/python3.12/site-packages/alembic/config.py", line 631, in main
+    self.run_cmd(cfg, options)
+  File "/home/vaibhav/.local/lib/python3.12/site-packages/alembic/config.py", line 608, in run_cmd
+    fn(
+  File "/home/vaibhav/.local/lib/python3.12/site-packages/alembic/command.py", line 236, in revision
+    script_directory.run_env()
+  File "/home/vaibhav/.local/lib/python3.12/site-packages/alembic/script/base.py", line 583, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "/home/vaibhav/.local/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vaibhav/.local/lib/python3.12/site-packages/alembic/util/pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/Vaibhav/OneDrive/Desktop/tech-slaves/backend/alembic/env.py", line 99, in <module>
+    run_migrations_online()
+  File "/mnt/c/Users/Vaibhav/OneDrive/Desktop/tech-slaves/backend/alembic/env.py", line 93, in run_migrations_online
+    asyncio.run(run_async_migrations())
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Vaibhav/OneDrive/Desktop/tech-slaves/backend/alembic/env.py", line 82, in run_async_migrations
+    connectable = async_engine_from_config(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vaibhav/.local/lib/python3.12/site-packages/sqlalchemy/ext/asyncio/engine.py", line 146, in async_engine_from_config
+    return create_async_engine(url, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vaibhav/.local/lib/python3.12/site-packages/sqlalchemy/ext/asyncio/engine.py", line 121, in create_async_engine
+    return AsyncEngine(sync_engine)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vaibhav/.local/lib/python3.12/site-packages/sqlalchemy/ext/asyncio/engine.py", line 1031, in __init__
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: The asyncio extension requires an async driver to be used. The loaded 'psycopg2' is not async.

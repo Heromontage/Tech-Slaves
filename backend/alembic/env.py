@@ -20,6 +20,10 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
+from sqlalchemy.ext.asyncio import create_async_engine  # add this
+from sqlalchemy import pool
+from database import Base, settings
+import models  # noqa
 
 # Import Base (which has all models attached) and settings from the app layer.
 # models.py must be imported so SQLAlchemy registers the table metadata.
@@ -75,14 +79,12 @@ def do_run_migrations(connection: Connection) -> None:
 
 
 async def run_async_migrations() -> None:
-    """
-    Alembic's internal engine is synchronous.  We create a *sync* connection
-    from our async engine via .sync_engine to bridge the gap.
-    """
-    connectable = async_engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,    # no pooling during migrations
+    # Build the asyncpg URL directly from settings — bypasses alembic.ini
+    asyncpg_url = settings.postgres_dsn  # already postgresql+asyncpg://
+
+    connectable = create_async_engine(
+        asyncpg_url,
+        poolclass=pool.NullPool,
     )
     async with connectable.connect() as connection:
         await connection.run_sync(do_run_migrations)
