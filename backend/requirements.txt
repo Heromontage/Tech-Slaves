@@ -24,3 +24,7 @@ python-dotenv==1.0.1
 pydantic==2.7.1
 pydantic-settings==2.2.1
 httpx==0.27.0
+
+# Graph Neural Network
+torch_geometric==2.5.3             # GCNConv, GATv2Conv, BatchNorm
+scikit-learn==1.4.2                # train/val/test splits, IsolationForest
