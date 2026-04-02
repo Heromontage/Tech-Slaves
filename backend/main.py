@@ -15,7 +15,7 @@ Interactive docs
 
 import logging
 from contextlib import asynccontextmanager
-
+from data_ingestion import register_ingestion_tasks, stop_ingestion_tasks
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -55,6 +55,10 @@ async def lifespan(app: FastAPI):
     # RuntimeError is raised inside verify_all_connections() if either fails,
     # which propagates here and prevents the server from accepting traffic.
     connection_report = await verify_all_connections()
+    
+    register_ingestion_tasks(app)  
+    yield
+    await stop_ingestion_tasks(app)
 
     logger.info("Database connectivity report:")
     for name, status in connection_report.items():
