@@ -92,6 +92,8 @@
           },
         }
     </script>
+<script src="sentinelflow-api.js" defer></script>
+<script src="page-bottleneck.js" defer></script>
 </head>
 <body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary-container/30">
 <div class="flex min-h-screen">
@@ -174,6 +176,7 @@
 <button class="bg-gradient-to-r from-primary-container to-primary text-on-primary font-headline font-bold px-6 py-2 rounded-full shadow-[0_0_15px_rgba(0,212,255,0.3)] hover:scale-105 transition-transform text-sm">
                         Export Report
                     </button>
+<div id="mitigation-result"></div>
 <div class="flex items-center gap-2 border-l border-white/10 ml-2 pl-4">
 <span class="material-symbols-outlined text-slate-400 hover:text-cyan-400 cursor-pointer" data-icon="notifications">notifications</span>
 <div class="w-8 h-8 rounded-full bg-slate-800 overflow-hidden border border-cyan-500/30">
@@ -184,7 +187,7 @@
 </header>
 <div class="p-8 space-y-8 max-w-[1600px] mx-auto">
 <!-- Active Bottleneck Summary -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="bn-summary">
 <!-- Critical Card -->
 <div class="glass-panel p-6 rounded-sm border-l-4 border-error glow-red relative overflow-hidden">
 <div class="absolute top-0 right-0 p-2 opacity-10">
@@ -192,7 +195,7 @@
 </div>
 <div class="flex justify-between items-start mb-4">
 <span class="bg-error-container text-on-error-container text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest">Critical</span>
-<span class="text-error font-mono font-bold text-xl">92%</span>
+<span class="text-error font-mono font-bold text-xl" id="bn-primary-node">92%</span>
 </div>
 <h3 class="font-headline text-lg font-bold text-white mb-1">Port Shanghai Congestion</h3>
 <p class="text-slate-400 text-sm mb-4">Extreme vessel backlog affecting key trade routes.</p>
@@ -344,7 +347,7 @@
 </div>
 </div>
 </div>
-<button class="w-full bg-cyan-500 text-on-primary-container font-headline font-bold py-3 rounded-full hover:bg-cyan-400 transition-colors shadow-[0_4px_12px_rgba(0,212,255,0.4)] flex items-center justify-center gap-2">
+<button class="w-full bg-cyan-500 text-on-primary-container font-headline font-bold py-3 rounded-full hover:bg-cyan-400 transition-colors shadow-[0_4px_12px_rgba(0,212,255,0.4)] flex items-center justify-center gap-2"id="btn-apply-suggestion">
                                 Apply Suggestion
                                 <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
 </button>
@@ -365,7 +368,7 @@
 <div class="px-8 py-6 border-b border-white/5 flex justify-between items-center">
 <h3 class="font-headline text-xl font-bold text-white tracking-tight">Affected Routes</h3>
 <div class="flex gap-2">
-<span class="text-[10px] font-mono text-slate-500 px-3 py-1 border border-white/10 rounded-full">Showing 124 total affected</span>
+<span class="text-[10px] font-mono text-slate-500 px-3 py-1 border border-white/10 rounded-full " id="affected-routes-count">Showing 124 total affected</span>
 </div>
 </div>
 <div class="overflow-x-auto">
@@ -381,7 +384,7 @@
 <th class="px-8 py-4 font-normal text-center">Reroute</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-white/5">
+<tbody class="divide-y divide-white/5" id="affected-routes-tbody">
 <tr class="hover:bg-white/5 transition-colors">
 <td class="px-8 py-4 text-cyan-400 font-bold">CN-SH-US-LB</td>
 <td class="px-8 py-4 text-slate-300">Shanghai (PVG)</td>

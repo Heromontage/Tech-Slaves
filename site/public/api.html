@@ -1,348 +1,258 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>SentinelFlow | API Documentation</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "surface-container": "#1b1f2c",
-                        "surface-dim": "#0f131f",
-                        "outline-variant": "#3c494e",
-                        "tertiary-fixed-dim": "#4edea3",
-                        "surface-variant": "#313442",
-                        "on-background": "#dfe2f3",
-                        "surface-container-lowest": "#0a0e1a",
-                        "on-tertiary": "#003824",
-                        "tertiary-fixed": "#6ffbbe",
-                        "surface-container-highest": "#313442",
-                        "background": "#0f131f",
-                        "surface-tint": "#3cd7ff",
-                        "on-secondary-fixed-variant": "#404758",
-                        "on-error-container": "#ffdad6",
-                        "on-tertiary-fixed-variant": "#005236",
-                        "on-primary-fixed-variant": "#004e5f",
-                        "on-tertiary-fixed": "#002113",
-                        "tertiary-container": "#49da9f",
-                        "outline": "#859398",
-                        "inverse-on-surface": "#2c303d",
-                        "secondary-container": "#404758",
-                        "primary-container": "#00d4ff",
-                        "surface": "#0f131f",
-                        "primary": "#a8e8ff",
-                        "error": "#ffb4ab",
-                        "on-secondary-fixed": "#141b2b",
-                        "on-primary-container": "#00586b",
-                        "on-surface": "#dfe2f3",
-                        "on-secondary": "#293040",
-                        "secondary-fixed-dim": "#c0c6db",
-                        "on-error": "#690005",
-                        "secondary-fixed": "#dce2f7",
-                        "surface-container-high": "#262a37",
-                        "inverse-surface": "#dfe2f3",
-                        "inverse-primary": "#00677e",
-                        "tertiary": "#6af7ba",
-                        "on-primary-fixed": "#001f27",
-                        "on-primary": "#003642",
-                        "surface-container-low": "#171b28",
-                        "surface-bright": "#353946",
-                        "primary-fixed-dim": "#3cd7ff",
-                        "secondary": "#c0c6db",
-                        "on-surface-variant": "#bbc9cf",
-                        "on-tertiary-container": "#005c3e",
-                        "primary-fixed": "#b4ebff",
-                        "on-secondary-container": "#aeb5c9",
-                        "error-container": "#93000a"
-                    },
-                    fontFamily: {
-                        "headline": ["Space Grotesk"],
-                        "body": ["Inter"],
-                        "label": ["Inter"],
-                        "mono": ["JetBrains Mono"]
-                    },
-                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container":"#1b1f2c","surface-container-lowest":"#0a0e1a","surface-container-high":"#262a37","surface-container-low":"#171b28","primary-container":"#00d4ff","tertiary":"#6af7ba","tertiary-container":"#49da9f","tertiary-fixed":"#6ffbbe","on-tertiary":"#003824","on-surface":"#dfe2f3","on-surface-variant":"#bbc9cf","outline-variant":"#3c494e","primary":"#a8e8ff","secondary":"#c0c6db","surface":"#0f131f","background":"#0f131f","error":"#ffb4ab"},fontFamily:{headline:["Space Grotesk"],body:["Inter"],mono:["JetBrains Mono"]},borderRadius:{DEFAULT:"0.5rem",lg:"1rem",full:"9999px"}}}};
+</script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .glow-sm { box-shadow: 0 0 15px rgba(0, 212, 255, 0.15); }
-        .glow-primary { box-shadow: 0 0 20px rgba(0, 212, 255, 0.25); }
-        .glass { backdrop-filter: blur(12px); background-color: rgba(49, 52, 66, 0.4); }
-        body { background-color: #0f131f; color: #dfe2f3; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0e1a; }
-        ::-webkit-scrollbar-thumb { background: #313442; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00d4ff; }
-    </style>
+  .glow-primary{box-shadow:0 0 20px rgba(0,212,255,0.25);}
+  .glow-sm{box-shadow:0 0 15px rgba(0,212,255,0.15);}
+  .glass{backdrop-filter:blur(12px);background:rgba(49,52,66,0.4);}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+  body{background:#0f131f;color:#dfe2f3;font-family:'Inter',sans-serif;}
+  ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:#0a0e1a;} ::-webkit-scrollbar-thumb{background:#313442;border-radius:10px;}
+</style>
 </head>
-<body class="font-body selection:bg-primary-container selection:text-on-primary-container">
-<!-- SideNavBar (Shared Component) -->
-<aside class="w-[260px] h-screen fixed left-0 top-0 flex flex-col p-6 bg-[#171b28] dark:bg-[#0a0e1a] bg-gradient-to-r from-[#171b28] to-[#0a0e1a] z-50 overflow-y-auto">
-<div class="mb-10 flex items-center gap-3">
-<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center glow-primary">
-<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">hub</span>
-</div>
-<div>
-<h1 class="text-xl font-bold tracking-tighter text-[#00d4ff] font-headline">SentinelFlow</h1>
-<p class="text-[10px] text-slate-400 uppercase tracking-widest font-mono">Supply Chain Twin</p>
-</div>
-</div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-white transition-colors hover:bg-[#1b1f2c] group" href="index.html">
-<span class="material-symbols-outlined text-xl" data-icon="dashboard">dashboard</span>
-<span class="font-['Space_Grotesk'] text-sm tracking-tight">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-white transition-colors hover:bg-[#1b1f2c] group" href="bottleneck.html">
-<span class="material-symbols-outlined text-xl" data-icon="analytics">analytics</span>
-<span class="font-['Space_Grotesk'] text-sm tracking-tight">Bottleneck Explorer</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-white transition-colors hover:bg-[#1b1f2c] group" href="data-streams.html">
-<span class="material-symbols-outlined text-xl" data-icon="cable">cable</span>
-<span class="font-['Space_Grotesk'] text-sm tracking-tight">Data Streams</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-white transition-colors hover:bg-[#1b1f2c] group" href="analytics.html">
-<span class="material-symbols-outlined text-xl" data-icon="monitoring">monitoring</span>
-<span class="font-['Space_Grotesk'] text-sm tracking-tight">Analytics</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#00d4ff] font-bold border-l-2 border-[#00d4ff] bg-cyan-500/5 group" href="api.html">
-<span class="material-symbols-outlined text-xl" data-icon="api">api</span>
-<span class="font-['Space_Grotesk'] text-sm tracking-tight">API Docs</span>
-</a>
-</nav>
-<div class="mt-auto pt-6 border-t border-white/5">
-<button class="w-full py-3 px-4 rounded-full bg-primary-container text-on-primary-container font-bold text-sm glow-primary hover:scale-[1.02] active:scale-95 transition-all">
-                Deploy Instance
-            </button>
-</div>
+<body class="font-body">
+
+<!-- SIDEBAR -->
+<aside class="w-[260px] h-screen fixed left-0 top-0 flex flex-col p-6 bg-gradient-to-r from-[#171b28] to-[#0a0e1a] z-50 overflow-y-auto">
+  <div class="mb-10 flex items-center gap-3">
+    <div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center glow-primary"><span class="material-symbols-outlined text-[#003642]" style="font-variation-settings:'FILL' 1">hub</span></div>
+    <div><h1 class="text-xl font-bold tracking-tighter text-[#00d4ff] font-headline">SentinelFlow</h1><p class="text-[10px] text-slate-400 uppercase tracking-widest font-mono">Supply Chain Twin</p></div>
+  </div>
+  <nav class="flex-1 space-y-1">
+    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-white transition-colors hover:bg-[#1b1f2c]" href="index.html"><span class="material-symbols-outlined">dashboard</span><span class="text-sm">Dashboard</span></a>
+    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-white transition-colors hover:bg-[#1b1f2c]" href="bottleneck.html"><span class="material-symbols-outlined">analytics</span><span class="text-sm">Bottleneck Explorer</span></a>
+    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-white transition-colors hover:bg-[#1b1f2c]" href="data-streams.html"><span class="material-symbols-outlined">cable</span><span class="text-sm">Data Streams</span></a>
+    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-white transition-colors hover:bg-[#1b1f2c]" href="analytics.html"><span class="material-symbols-outlined">monitoring</span><span class="text-sm">Analytics</span></a>
+    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#00d4ff] font-bold border-l-2 border-[#00d4ff] bg-cyan-500/5" href="api.html"><span class="material-symbols-outlined">api</span><span class="text-sm">API Docs</span></a>
+  </nav>
+  <div class="mt-auto pt-6 border-t border-white/5">
+    <button class="w-full py-3 px-4 rounded-full bg-primary-container text-[#003642] font-bold text-sm glow-primary hover:scale-[1.02] active:scale-95 transition-all">Deploy Instance</button>
+  </div>
 </aside>
-<!-- TopNavBar (Shared Component) -->
-<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 bg-[#0a0e1a]/80 backdrop-blur-xl border-b border-white/5 shadow-[0_0_15px_rgba(0,212,255,0.1)] flex items-center justify-between px-8 z-40">
-<div class="flex items-center gap-6">
-<h2 class="font-headline font-bold text-lg text-on-surface">API Documentation</h2>
-<div class="flex items-center gap-3 bg-surface-container-lowest px-3 py-1.5 rounded-full border border-white/5">
-<span class="px-2 py-0.5 rounded bg-primary-container/10 text-[#00d4ff] font-mono text-[10px] font-bold">v2.1</span>
-<span class="text-slate-500 font-mono text-[10px]">https://api.sentinelflow.io/v2</span>
-</div>
-</div>
-<div class="flex items-center gap-6">
-<div class="flex items-center gap-2">
-<span class="text-[10px] font-mono text-slate-400">Live Mode</span>
-<div class="w-10 h-5 bg-surface-container-high rounded-full relative cursor-pointer group">
-<div class="absolute left-1 top-1 w-3 h-3 bg-primary-container rounded-full glow-primary"></div>
-</div>
-</div>
-<div class="flex items-center gap-4 text-slate-400">
-<button class="hover:text-[#00d4ff] transition-colors"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
-<button class="hover:text-[#00d4ff] transition-colors"><span class="material-symbols-outlined" data-icon="settings">settings</span></button>
-<button class="px-5 py-2 rounded-full border border-primary-container/30 text-primary-container text-xs font-bold font-mono hover:bg-primary-container/10 transition-all">
-                    Try it Live
-                </button>
-</div>
-</div>
+
+<!-- TOP BAR -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 bg-[#0a0e1a]/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-8 z-40">
+  <div class="flex items-center gap-6">
+    <h2 class="font-headline font-bold text-lg text-on-surface">API Documentation</h2>
+    <div class="flex items-center gap-3 bg-surface-container-lowest px-3 py-1.5 rounded-full border border-white/5">
+      <span class="px-2 py-0.5 rounded bg-primary-container/10 text-[#00d4ff] font-mono text-[10px] font-bold">v2.1</span>
+      <span class="text-slate-500 font-mono text-[10px]">https://api.sentinelflow.io/v2</span>
+    </div>
+  </div>
+  <div class="flex items-center gap-6">
+    <!-- API Status Indicator -->
+    <div class="flex items-center gap-2">
+      <span id="api-status-dot" class="w-2 h-2 rounded-full bg-slate-500 animate-pulse"></span>
+      <span id="api-status-label" class="text-[10px] font-mono text-slate-400">Checking API…</span>
+    </div>
+    <button id="btn-try-live" class="px-5 py-2 rounded-full border border-primary-container/30 text-primary-container text-xs font-bold font-mono hover:bg-primary-container/10 transition-all">Try it Live</button>
+  </div>
 </header>
-<!-- Main Content Canvas -->
+
+<!-- MAIN -->
 <main class="ml-[260px] pt-24 pb-16 px-12">
-<div class="max-w-6xl mx-auto space-y-12">
-<!-- API Overview Section -->
-<section class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-<div class="lg:col-span-2 space-y-6">
-<div class="space-y-4">
-<h3 class="text-4xl font-headline font-bold text-on-surface tracking-tight">The Digital Architect Engine</h3>
-<p class="text-lg text-on-surface-variant leading-relaxed font-light">
-                            The SentinelFlow API provides RESTful access to real-time supply chain health data, bottleneck analytics, and optimization recommendations. Built with FastAPI, documented with OpenAPI 3.0.
-                        </p>
-</div>
-<div class="p-8 rounded-xl bg-surface-container-low relative overflow-hidden group">
-<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-<div class="flex items-start gap-4 mb-6">
-<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
-</div>
-<div>
-<h4 class="font-headline font-bold text-lg">Authentication</h4>
-<p class="text-sm text-slate-400">Secure your requests using standard Bearer Token authorization.</p>
-</div>
-</div>
-<div class="bg-surface-container-lowest p-4 rounded-lg border-l-2 border-primary-container font-mono text-sm group-hover:glow-sm transition-all">
-<span class="text-secondary">Authorization:</span>
-<span class="text-primary-container">Bearer &lt;YOUR_API_TOKEN&gt;</span>
-</div>
-</div>
-</div>
-<div class="lg:col-span-1">
-<div class="rounded-xl overflow-hidden aspect-square relative border border-white/5">
-<img class="w-full h-full object-cover" data-alt="Futuristic cyber security interface with glowing digital grid and circuit patterns in deep cyan and navy tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2vJ3u2RbfRJzp6SmAg34c63d96erP1vkz7gQ-ymtC0BjXLRLkj1R9ndEnBsmcQD0uyBwKHFRpyEgKCwsgGeP_8Pz7gJf4Ctxfjbl-5_bxbt7PwZNMLXlTkDaBN3Cb5aWDSUcglFYUbMpgpnaA2Io1CGH4O4FoP9IhMNQqHuMRxTF9oBiqX7lENYxE18dfNFFLGlIbZHYP0MD_YNnmOzo05B0tzHcLHzJjNqrfv9K_K8FQIgWNWK0oJTjcovsAEXwLhmVYMT5SIl8"/>
-<div class="absolute inset-0 bg-gradient-to-t from-surface-dim via-transparent to-transparent"></div>
-<div class="absolute bottom-6 left-6 right-6">
-<span class="px-2 py-1 rounded bg-tertiary-fixed text-on-tertiary text-[10px] font-bold font-mono mb-2 inline-block">PRODUCTION READY</span>
-<h5 class="font-headline font-bold text-white">99.9% Uptime SLA</h5>
-</div>
-</div>
-</div>
-</section>
-<!-- Endpoints Section & Code Panel -->
-<section class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-<!-- Scrollable API List -->
-<div class="space-y-6">
-<div class="flex items-center justify-between pb-4 border-b border-white/5">
-<h3 class="font-headline font-bold text-xl">Core Endpoints</h3>
-<div class="flex gap-2">
-<span class="w-2 h-2 rounded-full bg-tertiary glow-sm"></span>
-<span class="text-[10px] font-mono text-slate-500">API Status: Operational</span>
-</div>
-</div>
-<div class="space-y-4">
-<!-- GET /routes -->
-<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer group">
-<div class="flex items-center gap-4">
-<span class="px-3 py-1 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 w-16 text-center">GET</span>
-<span class="font-mono text-sm text-on-surface">/routes</span>
-<span class="material-symbols-outlined ml-auto text-slate-600 group-hover:text-primary-container transition-colors" data-icon="expand_more">expand_more</span>
-</div>
-<p class="mt-2 text-xs text-slate-400 pl-20">List all monitored routes with health scores</p>
-</div>
-<!-- GET /routes/{id} -->
-<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer group">
-<div class="flex items-center gap-4">
-<span class="px-3 py-1 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 w-16 text-center">GET</span>
-<span class="font-mono text-sm text-on-surface">/routes/{route_id}/health</span>
-<span class="material-symbols-outlined ml-auto text-slate-600 group-hover:text-primary-container transition-colors" data-icon="expand_more">expand_more</span>
-</div>
-<p class="mt-2 text-xs text-slate-400 pl-20">Get detailed health score for a specific route</p>
-</div>
-<!-- GET /bottlenecks -->
-<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer group border-l-2 border-primary-container">
-<div class="flex items-center gap-4">
-<span class="px-3 py-1 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 w-16 text-center">GET</span>
-<span class="font-mono text-sm text-on-surface">/bottlenecks</span>
-<span class="material-symbols-outlined ml-auto text-primary-container" data-icon="expand_less">expand_less</span>
-</div>
-<div class="mt-4 pl-20 space-y-3">
-<p class="text-xs text-slate-400">List currently active bottlenecks across the entire global network.</p>
-<div class="grid grid-cols-2 gap-4 text-[10px] font-mono">
-<div class="p-2 rounded bg-surface-container-lowest border border-white/5">
-<span class="text-slate-500 block mb-1">PARAM</span>
-<span class="text-on-surface">severity: string</span>
-</div>
-<div class="p-2 rounded bg-surface-container-lowest border border-white/5">
-<span class="text-slate-500 block mb-1">PARAM</span>
-<span class="text-on-surface">limit: int</span>
-</div>
-</div>
-</div>
-</div>
-<!-- POST /optimize -->
-<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer group">
-<div class="flex items-center gap-4">
-<span class="px-3 py-1 rounded text-[10px] font-mono font-bold bg-primary-container/10 text-primary-container w-16 text-center">POST</span>
-<span class="font-mono text-sm text-on-surface">/optimize</span>
-<span class="material-symbols-outlined ml-auto text-slate-600 group-hover:text-primary-container transition-colors" data-icon="expand_more">expand_more</span>
-</div>
-<p class="mt-2 text-xs text-slate-400 pl-20">Run optimization engine for rerouting suggestions</p>
-</div>
-<!-- GET /streams -->
-<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer group">
-<div class="flex items-center gap-4">
-<span class="px-3 py-1 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 w-16 text-center">GET</span>
-<span class="font-mono text-sm text-on-surface">/streams/status</span>
-<span class="material-symbols-outlined ml-auto text-slate-600 group-hover:text-primary-container transition-colors" data-icon="expand_more">expand_more</span>
-</div>
-<p class="mt-2 text-xs text-slate-400 pl-20">Get status of all data ingestion streams</p>
-</div>
-</div>
-</div>
-<!-- Code Example Panel -->
-<div class="lg:sticky lg:top-24 space-y-4">
-<div class="bg-surface-container rounded-xl overflow-hidden shadow-2xl border border-white/5">
-<div class="bg-surface-container-high px-6 py-3 flex items-center justify-between">
-<div class="flex gap-4">
-<button class="text-xs font-bold text-primary-container border-b border-primary-container pb-1">cURL</button>
-<button class="text-xs font-medium text-slate-500 hover:text-slate-300">Python</button>
-<button class="text-xs font-medium text-slate-500 hover:text-slate-300">Node.js</button>
-</div>
-<button class="text-slate-500 hover:text-white transition-colors">
-<span class="material-symbols-outlined text-lg" data-icon="content_copy">content_copy</span>
-</button>
-</div>
-<div class="p-6 font-mono text-xs leading-relaxed overflow-x-auto">
-<div class="text-slate-500 mb-4">// Request</div>
-<div class="flex gap-4 mb-8">
-<span class="text-emerald-400">GET</span>
-<span class="text-on-surface">https://api.sentinelflow.io/v2/routes/asia-pacific-express/health</span>
-</div>
-<div class="text-slate-500 mb-4">// Response</div>
-<div class="space-y-1">
-<div>{</div>
-<div class="pl-4"><span class="text-primary-container">"route_id"</span>: <span class="text-tertiary">"asia-pacific-express"</span>,</div>
-<div class="pl-4"><span class="text-primary-container">"health_score"</span>: <span class="text-amber-400">87</span>,</div>
-<div class="pl-4"><span class="text-primary-container">"risk_level"</span>: <span class="text-tertiary">"low"</span>,</div>
-<div class="pl-4"><span class="text-primary-container">"bottlenecks"</span>: [],</div>
-<div class="pl-4"><span class="text-primary-container">"throughput"</span>: <span class="text-tertiary">"94.2%"</span>,</div>
-<div class="pl-4"><span class="text-primary-container">"last_updated"</span>: <span class="text-tertiary">"2026-03-31T16:00:00Z"</span></div>
-<div>}</div>
-</div>
-</div>
-</div>
-<!-- Additional Context Card -->
-<div class="glass p-6 rounded-xl border border-white/5 space-y-4">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary-container" data-icon="info">info</span>
-<span class="font-headline font-bold">Pro-tip: Real-time Hooks</span>
-</div>
-<p class="text-xs text-on-surface-variant leading-relaxed">
-                            For mission-critical latency monitoring, use our <span class="text-primary-container font-mono">/streams/websocket</span> endpoint to receive push updates instead of polling health scores.
-                        </p>
-</div>
-</div>
-</section>
-<!-- Footer / Rate Limits -->
-<footer class="pt-12 border-t border-white/5 grid grid-cols-1 md:grid-cols-3 gap-8">
-<div class="space-y-4">
-<h5 class="font-headline font-bold text-sm uppercase tracking-widest text-slate-500">Rate Limits</h5>
-<div class="flex items-baseline gap-2">
-<span class="text-3xl font-bold text-on-surface">1,000</span>
-<span class="text-slate-500 text-xs font-mono">requests / min</span>
-</div>
-<p class="text-xs text-slate-500">Burst capacity allowed up to 1,500 req/min for Enterprise tier.</p>
-</div>
-<div class="space-y-4">
-<h5 class="font-headline font-bold text-sm uppercase tracking-widest text-slate-500">SDKs &amp; Tools</h5>
-<div class="flex flex-wrap gap-2">
-<a class="px-4 py-2 rounded-lg bg-surface-container-low border border-white/5 hover:border-primary-container/30 transition-all flex items-center gap-2 text-xs" href="#">
-<span class="material-symbols-outlined text-sm" data-icon="terminal">terminal</span> CLI Tool
-                        </a>
-<a class="px-4 py-2 rounded-lg bg-surface-container-low border border-white/5 hover:border-primary-container/30 transition-all flex items-center gap-2 text-xs" href="#">
-<span class="material-symbols-outlined text-sm" data-icon="code">code</span> Python SDK
-                        </a>
-<a class="px-4 py-2 rounded-lg bg-surface-container-low border border-white/5 hover:border-primary-container/30 transition-all flex items-center gap-2 text-xs" href="#">
-<span class="material-symbols-outlined text-sm" data-icon="javascript">javascript</span> JS Client
-                        </a>
-</div>
-</div>
-<div class="space-y-4">
-<h5 class="font-headline font-bold text-sm uppercase tracking-widest text-slate-500">Support</h5>
-<div class="space-y-2">
-<a class="flex items-center gap-2 text-xs text-slate-400 hover:text-[#00d4ff] transition-colors" href="#">
-<span class="material-symbols-outlined text-sm" data-icon="help">help</span> Help Center
-                        </a>
-<a class="flex items-center gap-2 text-xs text-slate-400 hover:text-[#00d4ff] transition-colors" href="#">
-<span class="material-symbols-outlined text-sm" data-icon="forum">forum</span> Developer Discord
-                        </a>
-</div>
-</div>
-</footer>
-</div>
+  <div class="max-w-6xl mx-auto space-y-12">
+
+    <!-- API Overview -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      <div class="lg:col-span-2 space-y-6">
+        <div>
+          <h3 class="text-4xl font-headline font-bold text-on-surface tracking-tight">The Digital Architect Engine</h3>
+          <p class="text-lg text-on-surface-variant leading-relaxed font-light mt-3">The SentinelFlow API provides RESTful access to real-time supply chain health data, bottleneck analytics, and optimization recommendations. Built with FastAPI, documented with OpenAPI 3.0.</p>
+        </div>
+        <div class="p-8 rounded-xl bg-surface-container-low relative overflow-hidden">
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">lock</span></div>
+            <div><h4 class="font-headline font-bold text-lg">Authentication</h4><p class="text-sm text-slate-400">Secure your requests using standard Bearer Token authorization.</p></div>
+          </div>
+          <div class="bg-surface-container-lowest p-4 rounded-lg border-l-2 border-primary-container font-mono text-sm">
+            <span class="text-secondary">Authorization:</span>
+            <span class="text-primary-container"> Bearer &lt;YOUR_API_TOKEN&gt;</span>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-xl overflow-hidden border border-white/5 bg-slate-900/50 p-8 flex flex-col items-center justify-center gap-4 text-center">
+        <div class="w-16 h-16 rounded-full bg-primary-container/10 border border-primary-container/30 flex items-center justify-center glow-primary"><span class="material-symbols-outlined text-3xl text-primary-container">api</span></div>
+        <div>
+          <p class="text-[10px] font-mono text-tertiary-container uppercase font-bold mb-1">Production Ready</p>
+          <h5 class="font-headline font-bold text-white text-xl">99.9% Uptime SLA</h5>
+          <p class="text-xs text-slate-500 mt-2">FastAPI + OpenAPI 3.0</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Endpoints + Code Panel -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+      <!-- Endpoint List -->
+      <div class="space-y-6">
+        <div class="flex items-center justify-between pb-4 border-b border-white/5">
+          <h3 class="font-headline font-bold text-xl">Core Endpoints</h3>
+          <div class="flex gap-2 items-center">
+            <span id="api-status-dot-2" class="w-2 h-2 rounded-full bg-slate-500"></span>
+            <span class="text-[10px] font-mono text-slate-500">API Status: <span id="api-status-text">Checking…</span></span>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+
+          <div data-endpoint="/routes" class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer group">
+            <div class="flex items-center gap-4">
+              <span class="px-3 py-1 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 w-16 text-center">GET</span>
+              <span class="font-mono text-sm text-on-surface">/routes</span>
+              <span class="material-symbols-outlined ml-auto text-slate-600 group-hover:text-primary-container transition-colors">expand_more</span>
+            </div>
+            <p class="mt-2 text-xs text-slate-400 pl-20">List all monitored routes with health scores</p>
+          </div>
+
+          <div data-endpoint="/routes/{route_id}/health" class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer group">
+            <div class="flex items-center gap-4">
+              <span class="px-3 py-1 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 w-16 text-center">GET</span>
+              <span class="font-mono text-sm text-on-surface">/routes/{route_id}/health</span>
+              <span class="material-symbols-outlined ml-auto text-slate-600 group-hover:text-primary-container transition-colors">expand_more</span>
+            </div>
+            <p class="mt-2 text-xs text-slate-400 pl-20">Get detailed health score for a specific route</p>
+          </div>
+
+          <div data-endpoint="/bottlenecks" class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer group">
+            <div class="flex items-center gap-4">
+              <span class="px-3 py-1 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 w-16 text-center">GET</span>
+              <span class="font-mono text-sm text-on-surface">/bottlenecks</span>
+              <span class="material-symbols-outlined ml-auto text-slate-600 group-hover:text-primary-container transition-colors">expand_more</span>
+            </div>
+            <p class="mt-2 text-xs text-slate-400 pl-20">List currently active bottlenecks</p>
+          </div>
+
+          <div data-endpoint="/optimize" class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer group">
+            <div class="flex items-center gap-4">
+              <span class="px-3 py-1 rounded text-[10px] font-mono font-bold bg-primary-container/10 text-primary-container w-16 text-center">POST</span>
+              <span class="font-mono text-sm text-on-surface">/optimize</span>
+              <span class="material-symbols-outlined ml-auto text-slate-600 group-hover:text-primary-container transition-colors">expand_more</span>
+            </div>
+            <p class="mt-2 text-xs text-slate-400 pl-20">Run optimization engine for rerouting suggestions</p>
+          </div>
+
+          <div data-endpoint="/streams/status" class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer group">
+            <div class="flex items-center gap-4">
+              <span class="px-3 py-1 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 w-16 text-center">GET</span>
+              <span class="font-mono text-sm text-on-surface">/streams/status</span>
+              <span class="material-symbols-outlined ml-auto text-slate-600 group-hover:text-primary-container transition-colors">expand_more</span>
+            </div>
+            <p class="mt-2 text-xs text-slate-400 pl-20">Get status of all data ingestion streams</p>
+          </div>
+
+        </div>
+
+        <!-- Selected endpoint indicator -->
+        <div class="bg-surface-container-low rounded-lg p-3 flex items-center gap-3 border border-primary-container/10">
+          <span id="playground-method" class="px-3 py-1 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 w-16 text-center">GET</span>
+          <span id="playground-endpoint-input" class="font-mono text-sm text-cyan-400">/routes/{route_id}/health</span>
+        </div>
+      </div>
+
+      <!-- Code Panel -->
+      <div class="lg:sticky lg:top-24 space-y-4">
+
+        <!-- Code block -->
+        <div class="bg-surface-container rounded-xl overflow-hidden shadow-2xl border border-white/5">
+          <div class="bg-surface-container-high px-6 py-3 flex items-center justify-between">
+            <div class="flex gap-4">
+              <button data-lang="curl" class="text-xs font-bold text-primary-container border-b border-primary-container pb-1">cURL</button>
+              <button data-lang="python" class="text-xs font-medium text-slate-500 hover:text-slate-300">Python</button>
+              <button data-lang="nodejs" class="text-xs font-medium text-slate-500 hover:text-slate-300">Node.js</button>
+            </div>
+            <button id="btn-copy-code" class="text-slate-500 hover:text-white transition-colors">
+              <span class="material-symbols-outlined text-lg">content_copy</span>
+            </button>
+          </div>
+          <div class="p-6 font-mono text-xs leading-relaxed overflow-x-auto max-h-[240px]">
+            <pre id="code-example-block" class="text-on-surface whitespace-pre-wrap"></pre>
+          </div>
+        </div>
+
+        <!-- Playground result panel -->
+        <div id="playground-result-panel" class="hidden bg-surface-container rounded-xl overflow-hidden border border-white/5">
+          <div class="bg-surface-container-high px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-[10px] font-mono text-slate-500">RESPONSE</span>
+              <span id="playground-status" class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[10px] font-bold">—</span>
+              <span id="playground-time" class="text-[10px] font-mono text-slate-600">—</span>
+            </div>
+            <button onclick="document.getElementById('playground-result-panel').classList.add('hidden')" class="text-slate-600 hover:text-slate-300 transition-colors">
+              <span class="material-symbols-outlined text-sm">close</span>
+            </button>
+          </div>
+          <div class="p-6 font-mono text-xs leading-relaxed overflow-x-auto max-h-[280px]">
+            <pre id="playground-result" class="text-cyan-300 whitespace-pre-wrap"></pre>
+          </div>
+        </div>
+
+        <!-- Pro tip card -->
+        <div class="glass p-6 rounded-xl border border-white/5 space-y-3">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary-container">info</span>
+            <span class="font-headline font-bold">Pro-tip: Real-time Hooks</span>
+          </div>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            For mission-critical monitoring, use <span class="text-primary-container font-mono">/streams/websocket</span> for push updates instead of polling.
+            Click any endpoint above then hit <strong class="text-white">Try it Live</strong> to see a live response.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Rate Limits Footer -->
+    <footer class="pt-12 border-t border-white/5 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <h5 class="font-headline font-bold text-sm uppercase tracking-widest text-slate-500 mb-4">Rate Limits</h5>
+        <div class="flex items-baseline gap-2"><span class="text-3xl font-bold text-on-surface">1,000</span><span class="text-slate-500 text-xs font-mono">requests / min</span></div>
+        <p class="text-xs text-slate-500 mt-2">Burst capacity: 1,500 req/min (Enterprise tier)</p>
+      </div>
+      <div>
+        <h5 class="font-headline font-bold text-sm uppercase tracking-widest text-slate-500 mb-4">SDKs &amp; Tools</h5>
+        <div class="flex flex-wrap gap-2">
+          <a class="px-4 py-2 rounded-lg bg-surface-container-low border border-white/5 hover:border-primary-container/30 transition-all flex items-center gap-2 text-xs" href="#"><span class="material-symbols-outlined text-sm">terminal</span> CLI Tool</a>
+          <a class="px-4 py-2 rounded-lg bg-surface-container-low border border-white/5 hover:border-primary-container/30 transition-all flex items-center gap-2 text-xs" href="#"><span class="material-symbols-outlined text-sm">code</span> Python SDK</a>
+          <a class="px-4 py-2 rounded-lg bg-surface-container-low border border-white/5 hover:border-primary-container/30 transition-all flex items-center gap-2 text-xs" href="#"><span class="material-symbols-outlined text-sm">javascript</span> JS Client</a>
+        </div>
+      </div>
+      <div>
+        <h5 class="font-headline font-bold text-sm uppercase tracking-widest text-slate-500 mb-4">Support</h5>
+        <div class="space-y-2">
+          <a class="flex items-center gap-2 text-xs text-slate-400 hover:text-[#00d4ff] transition-colors" href="#"><span class="material-symbols-outlined text-sm">help</span> Help Center</a>
+          <a class="flex items-center gap-2 text-xs text-slate-400 hover:text-[#00d4ff] transition-colors" href="#"><span class="material-symbols-outlined text-sm">forum</span> Developer Discord</a>
+          <a class="flex items-center gap-2 text-xs text-slate-400 hover:text-[#00d4ff] transition-colors" href="http://localhost:8000/docs" target="_blank"><span class="material-symbols-outlined text-sm">open_in_new</span> Swagger UI (local)</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
 </main>
-</body></html>
+
+<script src="sentinelflow-api.js"></script>
+<script src="page-api-docs.js"></script>
+<script>
+  // Sync the second status dot
+  const observer = new MutationObserver(() => {
+    const dot = document.getElementById("api-status-dot");
+    const dot2 = document.getElementById("api-status-dot-2");
+    const label = document.getElementById("api-status-label");
+    const text = document.getElementById("api-status-text");
+    if (dot2 && dot) dot2.className = dot.className;
+    if (text && label) text.textContent = label.textContent.replace("API Status: ","");
+  });
+  const dotEl = document.getElementById("api-status-dot");
+  if (dotEl) observer.observe(dotEl, { attributes:true });
+</script>
+</body>
+</html>

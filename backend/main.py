@@ -100,7 +100,8 @@ app = FastAPI(
     redoc_url="/redoc",
     lifespan=lifespan,
 )
-
+from api_routes import router as extra_router
+app.include_router(extra_router)
 # ── CORS ──────────────────────────────────────────────────────────────────
 # Allow React dev-servers on common local ports.  Extend this list or use
 # allow_origins=["*"] to open access wider (not recommended for production).
@@ -115,6 +116,7 @@ app.add_middleware(
         "http://127.0.0.1:3000",
         "http://127.0.0.1:5173",
         "http://127.0.0.1:8080",
+        "null",
     ],
     allow_credentials=True,
     allow_methods=["*"],
